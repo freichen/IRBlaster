@@ -1,0 +1,18 @@
+<?xml version='1.0' standalone='yes'?>
+<extension>
+  <name>PLUGIN_IRBLASTER_MODULE_NAME</name>
+  <creator>GWENDESIGN</creator>
+  <defaultState>enabled</defaultState>
+  <description>PLUGIN_IRBLASTER_MODULE_NAME</description>
+  <email>felix.mueller@gwendesign.com</email>
+  <homepageURL>http://www.gwendesign.com/</homepageURL>
+  <id>9A349458-BAF0-11DD-BAAF-B9C4FBCFBD16</id>
+  <module>Plugins::IRBlaster::Plugin</module>
+  <targetApplication>
+    <id>SlimServer</id>
+    <maxVersion>7.*</maxVersion>
+    <minVersion>7.5</minVersion>
+  </targetApplication>
+  <type>2</type>
+  <version>6.2.1</version>
+</extension>

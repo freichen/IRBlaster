@@ -1,0 +1,1 @@
+# Update to the excellent IRBlaster plugin written by Gwen Design (http://www.gwendesign.com/slimserver/dev_hard_and_software.htm#irblaster) for Squeezebox with a view to providing support for play pause events
