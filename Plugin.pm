@@ -32,6 +32,7 @@
 #	----------------------------------------------------------------------
 #	History:
 #
+#   2015/01/20 v6.3 - Added support for Play and Pause commands
 #	2012/02/21 v6.2.1 - SB Touch: Fix commands bigger than 32 bits
 #	2011/12/20 v6.2 - Make squeezeplay ready to support SB Touch (NEC and RC5)
 #			- Fix player selection if multiple players are present
@@ -1382,6 +1383,18 @@ sub commandCallback {
 			handlePowerOnOff( $client, $iPower);
 		}
 
+	# Handle Play commands
+	} elsif( $request->isCommand([['play']]) ) {
+		$log->debug( "*** IR-Blaster: commandCallback() Play.");
+
+		handlePlay( $client);
+
+	# Handle Pause commands
+	} elsif( $request->isCommand([['pause']]) ) {
+		$log->debug( "*** IR-Blaster: commandCallback() Pause.");
+
+		handlePause( $client);
+
 	# Get newclient events
 	} elsif( $request->isCommand([['client'], ['new']])
 	      || $request->isCommand([['client'], ['reconnect']])) {
@@ -1479,6 +1492,88 @@ sub myMixerVolumeCommand {
 
 	# Call original function in SqueezeCenter
 	eval { & { $gOrigVolCmdFuncRef} ($request) };
+}
+
+# ----------------------------------------------------------------------------
+# IR Blaster: Play handler
+# ----------------------------------------------------------------------------
+sub handlePlay {
+	my $client = shift;
+
+	$log->debug( "*** IR-Blaster: handlePlay()");
+
+	if( $prefs->client($client)->get('play_count') > 0) {
+		Slim::Utils::Timers::setTimer( $client,
+			Time::HiRes::time() + $prefs->client($client)->get('play_delay')->[0],
+			\&handlePlayCallback,
+			( 0));
+	}
+}
+
+# ----------------------------------------------------------------------------
+# IR Blaster: Play handler
+# ----------------------------------------------------------------------------
+sub handlePlayCallback {
+	my $client = shift;
+	my $i = shift;
+	
+	# Block IR Repeater for about 1 second
+	Slim::Utils::Timers::killTimers( $client, \&unblockIRRepeater);
+	$iBlockIRRepeater{$client} = 1;
+	Slim::Utils::Timers::setTimer( $client, Time::HiRes::time() + 1.0, \&unblockIRRepeater);
+
+	Slim::Utils::Timers::killTimers( $client, \&handlePlayCallback); 
+	$classPlugin->IRBlastSend( $client,
+		$prefs->client($client)->get('play_remote')->[$i],
+		$prefs->client($client)->get('play_command')->[$i]);
+	$i++;
+	if( $prefs->client($client)->get('play_count') > $i) {
+		Slim::Utils::Timers::setTimer( $client,
+			Time::HiRes::time() +  + $prefs->client($client)->get('play_delay')->[$i],
+			\&handlePlayCallback,
+			( $i));
+	}
+}
+
+# ----------------------------------------------------------------------------
+# IR Blaster: Pause handler
+# ----------------------------------------------------------------------------
+sub handlePause {
+	my $client = shift;
+
+	$log->debug( "*** IR-Blaster: handlePause()");
+
+	if( $prefs->client($client)->get('pause_count') > 0) {
+		Slim::Utils::Timers::setTimer( $client,
+			Time::HiRes::time() + $prefs->client($client)->get('pause_delay')->[0],
+			\&handlePauseCallback,
+			( 0));
+	}
+}
+
+# ----------------------------------------------------------------------------
+# IR Blaster: Pause handler
+# ----------------------------------------------------------------------------
+sub handlePauseCallback {
+	my $client = shift;
+	my $i = shift;
+	
+	# Block IR Repeater for about 1 second
+	Slim::Utils::Timers::killTimers( $client, \&unblockIRRepeater);
+	$iBlockIRRepeater{$client} = 1;
+	Slim::Utils::Timers::setTimer( $client, Time::HiRes::time() + 1.0, \&unblockIRRepeater);
+
+	Slim::Utils::Timers::killTimers( $client, \&handlePauseCallback); 
+	$classPlugin->IRBlastSend( $client,
+		$prefs->client($client)->get('pause_remote')->[$i],
+		$prefs->client($client)->get('pause_command')->[$i]);
+	$i++;
+	if( $prefs->client($client)->get('pause_count') > $i) {
+		Slim::Utils::Timers::setTimer( $client,
+			Time::HiRes::time() +  + $prefs->client($client)->get('pause_delay')->[$i],
+			\&handlePauseCallback,
+			( $i));
+	}
 }
 
 # ----------------------------------------------------------------------------

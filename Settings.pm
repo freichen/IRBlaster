@@ -16,7 +16,7 @@ use Slim::Utils::Prefs;
 # Global variables
 # ----------------------------------------------------------------------------
 
-my $gMaxItemsPerAction	= 5;	# IR commands per action (on/off/volup/voldown) in webinterface
+my $gMaxItemsPerAction	= 5;	# IR commands per action (play/pause/on/off/volup/voldown) in webinterface
 
 # ----------------------------------------------------------------------------
 # References to other classes
@@ -40,6 +40,16 @@ $prefs->migrate( 1, sub {
 
 $prefs->migrateClient( 1, sub {
 	my( $clientprefs, $client) = @_;
+
+	$clientprefs->set('play_count',Slim::Utils::Prefs::OldPrefs->clientGet($client,'plugin_irblast_count_play'));
+	$clientprefs->set('play_remote',Slim::Utils::Prefs::OldPrefs->clientGet($client,'plugin_irblast_remote_play'));
+	$clientprefs->set('play_command',Slim::Utils::Prefs::OldPrefs->clientGet($client,'plugin_irblast_command_play'));
+	$clientprefs->set('play_delay',Slim::Utils::Prefs::OldPrefs->clientGet($client,'plugin_irblast_delay_play'));
+
+	$clientprefs->set('pause_count',Slim::Utils::Prefs::OldPrefs->clientGet($client,'plugin_irblast_count_pause'));
+	$clientprefs->set('pause_remote',Slim::Utils::Prefs::OldPrefs->clientGet($client,'plugin_irblast_remote_pause'));
+	$clientprefs->set('pause_command',Slim::Utils::Prefs::OldPrefs->clientGet($client,'plugin_irblast_command_pause'));
+	$clientprefs->set('pause_delay',Slim::Utils::Prefs::OldPrefs->clientGet($client,'plugin_irblast_delay_pause'));
 
 	$clientprefs->set('poweron_count',Slim::Utils::Prefs::OldPrefs->clientGet($client,'plugin_irblast_count_poweron'));
 	$clientprefs->set('poweron_remote',Slim::Utils::Prefs::OldPrefs->clientGet($client,'plugin_irblast_remote_poweron'));
@@ -116,7 +126,7 @@ sub validFor {
 }
 
 # ----------------------------------------------------------------------------
-# Handler for settings for the four events (on,off,volup,voldown) and more
+# Handler for settings for the four events (play,pause,on,off,volup,voldown) and more
 # ----------------------------------------------------------------------------
 sub handler {
 	my ($class, $client, $params) = @_;
@@ -190,6 +200,242 @@ sub handler {
 	my $tempPref1;
 	my $tempPref2;
 	my $tempPref3;
+
+	# ********************
+	# ----- Play ---------
+
+	# Make sure there is at least one entry in preferences file
+	if( $prefs->client($client)->get('play_count') eq "") {
+		$prefs->client($client)->set('play_count', '1');
+
+		$tempPref1 = $prefs->client($client)->get('play_remote');
+		$tempPref1->[0] = '-1';
+		$prefs->client($client)->set('play_remote', $tempPref1);
+		$tempPref2 = $prefs->client($client)->get('play_command');
+		$tempPref2->[0] = '';
+		$prefs->client($client)->set('play_command', $tempPref2);
+		$tempPref3 = $prefs->client($client)->get('play_delay');
+		$tempPref3->[0] = '0.25';
+		$prefs->client($client)->set('play_delay', $tempPref3);
+	}
+
+	# Get data from webinterface and set data in preferences file
+	$tempPref1 = $prefs->client($client)->get('play_remote');
+	$tempPref2 = $prefs->client($client)->get('play_command');
+	$tempPref3 = $prefs->client($client)->get('play_delay');
+	for( my $i = 0; $i < $prefs->client($client)->get('play_count'); $i++) {
+		if( $params->{'selRemPlay_' . $i} ne "") {
+			$tempPref1->[$i] = $params->{'selRemPlay_' . $i};
+			$tempPref2->[$i] = $params->{'selCmdPlay_' . $i};
+			$tempPref3->[$i] = $params->{'selDelayPlay_' . $i};
+		}
+	}
+	$prefs->client($client)->set('play_remote', $tempPref1);
+	$prefs->client($client)->set('play_command', $tempPref2);
+	$prefs->client($client)->set('play_delay', $tempPref3);
+
+	# Add row clicked - only add if maximum is not reached
+	my $button = -1;
+	for( my $i = 0; $i < $gMaxItemsPerAction; $i++) {
+		if( $params->{'mode'} eq "addPlay_" . $i) {
+			$button = $i;
+			last;
+		}
+	}
+	if( $button != -1) {
+		my $count = $prefs->client($client)->get('play_count');
+		if( $count < $gMaxItemsPerAction) {
+			$tempPref1 = $prefs->client($client)->get('play_remote');
+			$tempPref2 = $prefs->client($client)->get('play_command');
+			$tempPref3 = $prefs->client($client)->get('play_delay');
+			for( my $i = $button; $i < $prefs->client($client)->get('play_count'); $i++) {
+				my $from = $count - $i + $button - 1;
+				my $to = $from + 1;
+				$tempPref1->[$to] = $prefs->client($client)->get('play_remote')->[$from];
+				$tempPref2->[$to] = $prefs->client($client)->get('play_command')->[$from];
+				$tempPref3->[$to] = $prefs->client($client)->get('play_delay')->[$from];
+			}
+			$tempPref1->[$button] = '-1';
+			$tempPref2->[$button] = '';
+			$tempPref3->[$button] = '0.25';
+
+			$prefs->client($client)->set('play_remote',$tempPref1);
+			$prefs->client($client)->set('play_command',$tempPref2);
+			$prefs->client($client)->set('play_delay',$tempPref3);
+			
+			$prefs->client($client)->set('play_count', $count + 1);
+		}
+	}
+
+	# Remove row clicked - only remove if minimum is not reached
+	$button = -1;
+	for( my $i = 0; $i < $prefs->client($client)->get('play_count'); $i++) {
+		if( $params->{'mode'} eq "delPlay_" . $i) {
+			$button = $i;
+			last;
+		}
+	}
+	if( $button != -1) {
+		my $count = $prefs->client($client)->get('play_count');
+		if( $count > 1) {
+			$tempPref1 = $prefs->client($client)->get('play_remote');
+			$tempPref2 = $prefs->client($client)->get('play_command');
+			$tempPref3 = $prefs->client($client)->get('play_delay');
+
+			for( my $i = $button; $i < $prefs->client($client)->get('play_count') - 1; $i++) {
+				my $from = $i + 1;
+				my $to = $i;
+				$tempPref1->[$to] = $prefs->client($client)->get('play_remote')->[$from];
+				$tempPref2->[$to] = $prefs->client($client)->get('play_command')->[$from];
+				$tempPref3->[$to] = $prefs->client($client)->get('play_delay')->[$from];
+			}
+			$prefs->client($client)->set('play_remote',$tempPref1);
+			$prefs->client($client)->set('play_command',$tempPref2);
+			$prefs->client($client)->set('play_delay',$tempPref3);
+
+			$prefs->client($client)->set('play_count', $count - 1);
+		}
+	}
+	
+	# Test buttons clicked
+	for( my $i = 0; $i < $prefs->client($client)->get('play_count'); $i++) {
+		if( $params->{'mode'} eq "testPlay_" . $i) {
+#			Plugins::IRBlaster::Plugin::IRBlastSend( $client,
+			$classPlugin->IRBlastSend( $client,
+				$prefs->client($client)->get('play_remote')->[$i],
+				$prefs->client($client)->get('play_command')->[$i]);
+		}
+	}	
+	
+	# Get data from pref file and set in webinterface
+	for( my $i = 0; $i < $prefs->client($client)->get('play_count'); $i++) {
+		my %list_form = %$params;
+		$list_form{'max'} = $gMaxItemsPerAction;
+		$list_form{'count'} = $prefs->client($client)->get('play_count');
+		$list_form{'id'} = $i;
+		$list_form{'play_remote'} = $prefs->client($client)->get('play_remote')->[$i];
+		$list_form{'play_command'} = $prefs->client($client)->get('play_command')->[$i];
+		$list_form{'play_delay'} = $prefs->client($client)->get('play_delay')->[$i];
+		$params->{'play_list'} .= ${Slim::Web::HTTP::filltemplatefile('plugins/IRBlaster/play_list.html',\%list_form)};
+	}
+
+	# *********************
+	# ----- Pause ---------
+
+	# Make sure there is at least one entry in preferences file
+	if( $prefs->client($client)->get('pause_count') eq "") {
+		$prefs->client($client)->set('pause_count', '1');
+
+		$tempPref1 = $prefs->client($client)->get('pause_remote');
+		$tempPref1->[0] = '-1';
+		$prefs->client($client)->set('pause_remote', $tempPref1);
+		$tempPref2 = $prefs->client($client)->get('pause_command');
+		$tempPref2->[0] = '';
+		$prefs->client($client)->set('pause_command', $tempPref2);
+		$tempPref3 = $prefs->client($client)->get('pause_delay');
+		$tempPref3->[0] = '0.25';
+		$prefs->client($client)->set('pause_delay', $tempPref3);
+	}
+
+	# Get data from webinterface and set data in preferences file
+	$tempPref1 = $prefs->client($client)->get('pause_remote');
+	$tempPref2 = $prefs->client($client)->get('pause_command');
+	$tempPref3 = $prefs->client($client)->get('pause_delay');
+	for( my $i = 0; $i < $prefs->client($client)->get('pause_count'); $i++) {
+		if( $params->{'selRemPause_' . $i} ne "") {
+			$tempPref1->[$i] = $params->{'selRemPause_' . $i};
+			$tempPref2->[$i] = $params->{'selCmdPause_' . $i};
+			$tempPref3->[$i] = $params->{'selDelayPause_' . $i};
+		}
+	}
+	$prefs->client($client)->set('pause_remote', $tempPref1);
+	$prefs->client($client)->set('pause_command', $tempPref2);
+	$prefs->client($client)->set('pause_delay', $tempPref3);
+
+	# Add row clicked - only add if maximum is not reached
+	my $button = -1;
+	for( my $i = 0; $i < $gMaxItemsPerAction; $i++) {
+		if( $params->{'mode'} eq "addPause_" . $i) {
+			$button = $i;
+			last;
+		}
+	}
+	if( $button != -1) {
+		my $count = $prefs->client($client)->get('pause_count');
+		if( $count < $gMaxItemsPerAction) {
+			$tempPref1 = $prefs->client($client)->get('pause_remote');
+			$tempPref2 = $prefs->client($client)->get('pause_command');
+			$tempPref3 = $prefs->client($client)->get('pause_delay');
+			for( my $i = $button; $i < $prefs->client($client)->get('pause_count'); $i++) {
+				my $from = $count - $i + $button - 1;
+				my $to = $from + 1;
+				$tempPref1->[$to] = $prefs->client($client)->get('pause_remote')->[$from];
+				$tempPref2->[$to] = $prefs->client($client)->get('pause_command')->[$from];
+				$tempPref3->[$to] = $prefs->client($client)->get('pause_delay')->[$from];
+			}
+			$tempPref1->[$button] = '-1';
+			$tempPref2->[$button] = '';
+			$tempPref3->[$button] = '0.25';
+
+			$prefs->client($client)->set('pause_remote',$tempPref1);
+			$prefs->client($client)->set('pause_command',$tempPref2);
+			$prefs->client($client)->set('pause_delay',$tempPref3);
+			
+			$prefs->client($client)->set('pause_count', $count + 1);
+		}
+	}
+
+	# Remove row clicked - only remove if minimum is not reached
+	$button = -1;
+	for( my $i = 0; $i < $prefs->client($client)->get('pause_count'); $i++) {
+		if( $params->{'mode'} eq "delPause_" . $i) {
+			$button = $i;
+			last;
+		}
+	}
+	if( $button != -1) {
+		my $count = $prefs->client($client)->get('pause_count');
+		if( $count > 1) {
+			$tempPref1 = $prefs->client($client)->get('pause_remote');
+			$tempPref2 = $prefs->client($client)->get('pause_command');
+			$tempPref3 = $prefs->client($client)->get('pause_delay');
+
+			for( my $i = $button; $i < $prefs->client($client)->get('pause_count') - 1; $i++) {
+				my $from = $i + 1;
+				my $to = $i;
+				$tempPref1->[$to] = $prefs->client($client)->get('pause_remote')->[$from];
+				$tempPref2->[$to] = $prefs->client($client)->get('pause_command')->[$from];
+				$tempPref3->[$to] = $prefs->client($client)->get('pause_delay')->[$from];
+			}
+			$prefs->client($client)->set('pause_remote',$tempPref1);
+			$prefs->client($client)->set('pause_command',$tempPref2);
+			$prefs->client($client)->set('pause_delay',$tempPref3);
+
+			$prefs->client($client)->set('pause_count', $count - 1);
+		}
+	}
+	
+	# Test buttons clicked
+	for( my $i = 0; $i < $prefs->client($client)->get('pause_count'); $i++) {
+		if( $params->{'mode'} eq "testPause_" . $i) {
+#			Plugins::IRBlaster::Plugin::IRBlastSend( $client,
+			$classPlugin->IRBlastSend( $client,
+				$prefs->client($client)->get('pause_remote')->[$i],
+				$prefs->client($client)->get('pause_command')->[$i]);
+		}
+	}	
+	
+	# Get data from pref file and set in webinterface
+	for( my $i = 0; $i < $prefs->client($client)->get('pause_count'); $i++) {
+		my %list_form = %$params;
+		$list_form{'max'} = $gMaxItemsPerAction;
+		$list_form{'count'} = $prefs->client($client)->get('pause_count');
+		$list_form{'id'} = $i;
+		$list_form{'pause_remote'} = $prefs->client($client)->get('pause_remote')->[$i];
+		$list_form{'pause_command'} = $prefs->client($client)->get('pause_command')->[$i];
+		$list_form{'pause_delay'} = $prefs->client($client)->get('pause_delay')->[$i];
+		$params->{'pause_list'} .= ${Slim::Web::HTTP::filltemplatefile('plugins/IRBlaster/pause_list.html',\%list_form)};
+	}
 
 	# ********************
 	# ----- Power on -----

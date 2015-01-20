@@ -52,6 +52,16 @@ PLUGIN_IRBLASTER_DELAY
 	DE	Pause
 	EN	Delay
 	FR	Délai
+
+PLUGIN_IRBLASTER_PLAY
+	DE	Play:
+	EN	Play:
+	FR	Play :
+
+PLUGIN_IRBLASTER_PAUSE
+	DE	Pause:
+	EN	Pause:
+	FR	Pause:
 	
 PLUGIN_IRBLASTER_POWER_ON
 	DE	Einschalten:
