@@ -126,7 +126,7 @@ sub validFor {
 }
 
 # ----------------------------------------------------------------------------
-# Handler for settings for the four events (play,pause,on,off,volup,voldown) and more
+# Handler for settings for the six events (play,pause,on,off,volup,voldown) and more
 # ----------------------------------------------------------------------------
 sub handler {
 	my ($class, $client, $params) = @_;
