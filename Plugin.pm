@@ -1383,17 +1383,18 @@ sub commandCallback {
 			handlePowerOnOff( $client, $iPower);
 		}
 
-	# Handle Play commands
-	} elsif( $request->isCommand([['play']]) ) {
-		$log->debug( "*** IR-Blaster: commandCallback() Play.");
+		# Handle Play commands
+		if( $request->isCommand([['play']]) ) {
+			$log->debug( "*** IR-Blaster: commandCallback() Play.");
 
-		handlePlay( $client);
+			handlePlay( $client );
+		}
+		# Handle Pause commands
+		if( $request->isCommand([['pause']]) ) {
+			$log->debug( "*** IR-Blaster: commandCallback() Pause.");
 
-	# Handle Pause commands
-	} elsif( $request->isCommand([['pause']]) ) {
-		$log->debug( "*** IR-Blaster: commandCallback() Pause.");
-
-		handlePause( $client);
+			handlePause( $client) ;
+		}
 
 	# Get newclient events
 	} elsif( $request->isCommand([['client'], ['new']])
