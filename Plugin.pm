@@ -1366,35 +1366,37 @@ sub commandCallback {
 		return;
 	}
 
-	# Get power on and off commands
-	# Sometimes we do get only a power command, sometimes only a play/pause command and sometimes both
-	if( $request->isCommand([['power']])
-	 || $request->isCommand([['play']])
-	 || $request->isCommand([['pause']])
-	 || $request->isCommand([['playlist'], ['newsong']]) ) {
-		my $iPower = $client->power();
+	# Set new power state
+	my $iPower = $client->power();
+	my $iPowerOld = $iOldPowerState{$client};
+	$iOldPowerState{$client} = $iPower;
+
+	# Trigger custom command sending client name, old power state, new power state, 
+	my $shell_output = system("/var/lib/squeezeboxserver/cache/InstalledPlugins/Plugins/IRBlaster/custom-run-on-action.sh", $client->name(), $iPowerOld, $iPower, $request->getParam('_device'));
+	$log->debug( "*** IR-Blaster: commandCallback() custom script output: " . $shell_output . "\n");
 		
-		# Check with last known power state -> if different send IR command
-		if( $iOldPowerState{$client} ne $iPower) {
-			$iOldPowerState{$client} = $iPower;
+	# Compare new power state with last known power state -> if different send IR command
+	if( $iPowerOld ne $iPower) {
+		$log->debug( "*** IR-Blaster: commandCallback() Power: $iPower\n");
+		handlePowerOnOff( $client, $iPower);
 
-			$log->debug( "*** IR-Blaster: commandCallback() Power: $iPower\n");
-
-			handlePowerOnOff( $client, $iPower);
-		}
-
-		# Handle Play commands
-		if( $request->isCommand([['play']]) ) {
-			$log->debug( "*** IR-Blaster: commandCallback() Play.");
-
+		if( not($request->isCommand([['play']]))) {
+			$log->debug( "*** IR-Blaster: commandCallback() automated play following power event.");
 			handlePlay( $client );
 		}
-		# Handle Pause commands
-		if( $request->isCommand([['pause']]) ) {
-			$log->debug( "*** IR-Blaster: commandCallback() Pause.");
+	}
 
-			handlePause( $client) ;
-		}
+	# Handle Play commands
+	if( $request->isCommand([['play']]) ) {
+		$log->debug( "*** IR-Blaster: commandCallback() Play.");
+
+		handlePlay( $client );
+	
+	# Handle Pause commands
+	} elsif( $request->isCommand([['pause']]) ) {
+		$log->debug( "*** IR-Blaster: commandCallback() Pause.");
+
+		handlePause( $client) ;
 
 	# Get newclient events
 	} elsif( $request->isCommand([['client'], ['new']])
