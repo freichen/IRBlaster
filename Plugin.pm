@@ -1371,25 +1371,34 @@ sub commandCallback {
 	my $iPowerOld = $iOldPowerState{$client};
 	$iOldPowerState{$client} = $iPower;
 
-	# Trigger custom command sending client name, old power state, new power state and command 
-	my $shell_output = system("/var/lib/squeezeboxserver/cache/InstalledPlugins/Plugins/IRBlaster/custom-run-on-action.sh", $client->name(), $iPowerOld, $iPower, $request->{'_request'}[0], $request->{'_request'}[1], "> /var/log/squeezebox/custom_script.log");
-	$log->debug( "*** IR-Blaster: commandCallback() custom script exit code: " . $shell_output . "\n");
-		
-	# Compare new power state with last known power state -> if different send IR command
+	# Compare new power state with last known power state run external component power script
 	if( $iPowerOld ne $iPower) {
-		$log->debug( "*** IR-Blaster: commandCallback() Power: $iPower\n");
-		handlePowerOnOff( $client, $iPower);
 
-		if( not($request->isCommand([['play']]))) {
-			$log->debug( "*** IR-Blaster: commandCallback() automated play following power event.");
+		$log->debug( "*** IR-Blaster: commandCallback() Power: $iPower\n");
+
+		my $shell_output = `/var/lib/squeezeboxserver/cache/InstalledPlugins/Plugins/IRBlaster/custom-run-on-action.sh $client->name() $iPowerOld $iPower $request->{'_request'}[0] $request->{'_request'}[1] >> /var/log/squeezebox/custom_script.log`;
+		$log->debug( "*** IR-Blaster: commandCallback() custom script exit code: " . $shell_output . "\n");
+		
+		# if client is already playing and command was not play trigger ir 'play' command again as external component probably missed it while powering on
+		if( not($request->isCommand([['play']]) ) && 
+			$request->isPlaying() ) {
+
+			$log->debug( "*** IR-Blaster: commandCallback() handle play following power event if playing.");
 			handlePlay( $client );
+
+		# ...and if not playing just trigger normal power event
+		} elsif( not($request->isCommand([['play']]) ) && 
+			not($request->isPlaying()) ) {
+
+			$log->debug( "*** IR-Blaster: commandCallback() automated play following power event.");
+			handlePowerOnOff($client, $iPower);
 		}
 	}
 
 	# Handle Play commands
 	if( $request->isCommand([['play']]) ) {
-		$log->debug( "*** IR-Blaster: commandCallback() Play.");
 
+		$log->debug( "*** IR-Blaster: commandCallback() Play.");
 		handlePlay( $client );
 	
 	# Handle Pause commands
