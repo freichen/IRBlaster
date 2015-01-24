@@ -1358,8 +1358,8 @@ sub commandCallback {
 
 	my $client = $request->client();
 
-	$log->debug( "Client: " . $client->name() . "COMMAND triggered: " . $request->{'_request'}[0]);
-	$log->debug( "Client: " . $client->name() . "subcommand triggered: " . $request->{'_request'}[1]);
+	$log->debug( "Client " . $client->name() . " command triggered: " . $request->{'_request'}[0]);
+	$log->debug( "Client " . $client->name() . " sub-com triggered: " . $request->{'_request'}[1]);
 	
 	# IRBlaster works with: SB2/3, Transporter and Fab4
 	if( !defined( $client) || !( ( $client->model() eq 'squeezebox2') || ( $client->model() eq 'transporter') || ( $client->model() eq 'fab4'))) {
@@ -1380,13 +1380,13 @@ sub commandCallback {
 		# if client is already playing and command was not play trigger ir 'play' command again as external component probably missed it while powering on
 		if( $request->isCommand([['play']]) ) {
 
-			$log->debug( "Power switch triggered by play command.");
+			$log->debug( "Client " . $client->name() . " power state changed by play command to: " . $iPower);
 			handlePlay( $client );
 
 		# ...and if not playing just trigger normal power event
 		} else {
 
-			$log->debug( "Power command changed to new power state: $iPower");
+			$log->debug( "Client " . $client->name() . " power state changed directly to: $iPower");
 			handlePowerOnOff($client, $iPower);
 		}
 	}
@@ -1394,12 +1394,12 @@ sub commandCallback {
 	# Handle Play commands
 	if( $request->isCommand([['play']]) ) {
 
-		$log->debug( "Play command triggered.");
+		$log->debug( "Client " . $client->name() . " handle IR for play command");
 		handlePlay( $client );
 	
 	# Handle Pause commands
 	} elsif( $request->isCommand([['pause']]) ) {
-		$log->debug( "Pause command triggered.");
+		$log->debug( "Client " . $client->name() . " handle IR for pause command");
 
 		handlePause( $client) ;
 
