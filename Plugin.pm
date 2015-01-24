@@ -1358,8 +1358,8 @@ sub commandCallback {
 
 	my $client = $request->client();
 
-	$log->debug( "Command triggered: " . $request->{'_request'}[0]);
-	$log->debug( "Subcommand triggered: " . $request->{'_request'}[1]);
+	$log->debug( "COMMAND triggered: " . $request->{'_request'}[0]);
+	$log->debug( "subcommand triggered: " . $request->{'_request'}[1]);
 	
 	# IRBlaster works with: SB2/3, Transporter and Fab4
 	if( !defined( $client) || !( ( $client->model() eq 'squeezebox2') || ( $client->model() eq 'transporter') || ( $client->model() eq 'fab4'))) {
