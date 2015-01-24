@@ -1374,21 +1374,19 @@ sub commandCallback {
 	# Compare new power state with last known power state run external component power script
 	if( $iPowerOld ne $iPower) {
 
-		$log->debug( "*** IR-Blaster: commandCallback() Power: $iPower\n");
-
 		my $shell_output = `/var/lib/squeezeboxserver/cache/InstalledPlugins/Plugins/IRBlaster/custom-run-on-action.sh $client->name() $iPowerOld $iPower $request->{'_request'}[0] $request->{'_request'}[1] >> /var/log/squeezebox/custom_script.log`;
 		$log->debug( "*** IR-Blaster: commandCallback() custom script exit code: " . $shell_output . "\n");
 		
 		# if client is already playing and command was not play trigger ir 'play' command again as external component probably missed it while powering on
 		if( $request->isCommand([['play']]) ) {
 
-			$log->debug( "*** IR-Blaster: commandCallback() handle play following power event if playing.");
+			$log->debug( "*** IR-Blaster: commandCallback() handle play following power event.");
 			handlePlay( $client );
 
 		# ...and if not playing just trigger normal power event
 		} else {
 
-			$log->debug( "*** IR-Blaster: commandCallback() automated play following power event.");
+			$log->debug( "*** IR-Blaster: commandCallback() handle new power state: $iPower\n");
 			handlePowerOnOff($client, $iPower);
 		}
 	}
