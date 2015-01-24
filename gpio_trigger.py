@@ -13,6 +13,8 @@ power_after = sys.argv[3]
 main_command = sys.argv[4]
 sub_command = sys.argv[5]
 
+print client_name, power_before, power_after, main_command, sub_command
+
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(18, GPIO.OUT)
