@@ -1380,13 +1380,13 @@ sub commandCallback {
 		$log->debug( "*** IR-Blaster: commandCallback() custom script exit code: " . $shell_output . "\n");
 		
 		# if client is already playing and command was not play trigger ir 'play' command again as external component probably missed it while powering on
-		if( not $request->isCommand([['play']]) ) {
+		if( $request->isCommand([['play']]) ) {
 
 			$log->debug( "*** IR-Blaster: commandCallback() handle play following power event if playing.");
 			handlePlay( $client );
 
 		# ...and if not playing just trigger normal power event
-		} elsif( not $request->isCommand([['play']]) ) {
+		} else {
 
 			$log->debug( "*** IR-Blaster: commandCallback() automated play following power event.");
 			handlePowerOnOff($client, $iPower);
