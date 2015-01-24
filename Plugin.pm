@@ -1372,7 +1372,7 @@ sub commandCallback {
 	$iOldPowerState{$client} = $iPower;
 
 	# Trigger custom command sending client name, old power state, new power state and command 
-	my $shell_output = system("/var/lib/squeezeboxserver/cache/InstalledPlugins/Plugins/IRBlaster/custom-run-on-action.sh", $client->name(), $iPowerOld, $iPower, $request->{'_request'}[0], $request->{'_request'}[1]);
+	my $shell_output = system("/var/lib/squeezeboxserver/cache/InstalledPlugins/Plugins/IRBlaster/custom-run-on-action.sh", $client->name(), $iPowerOld, $iPower, $request->{'_request'}[0], $request->{'_request'}[1], "> /var/log/squeezebox/custom_script.log");
 	$log->debug( "*** IR-Blaster: commandCallback() custom script exit code: " . $shell_output . "\n");
 		
 	# Compare new power state with last known power state -> if different send IR command
