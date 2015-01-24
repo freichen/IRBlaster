@@ -1383,13 +1383,13 @@ sub commandCallback {
 		# if client is already playing and command was not play trigger ir 'play' command again as external component probably missed it while powering on
 		if( $request->isCommand([['play']]) ) {
 
-			$log->debug( "${name} play command changed power state to: ${iPower}");
+			$log->debug( "${name} play command changed power state from ${iPowerOld} to ${iPower}");
 			handlePlay( $client );
 
 		# ...and if not playing just trigger normal power event
 		} else {
 
-			$log->debug( "${name} changed power state directly to: ${iPower}");
+			$log->debug( "${name} changed power state directly from ${iPowerOld} to ${iPower}");
 			handlePowerOnOff($client, $iPower);
 		}
 	}
