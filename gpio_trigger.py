@@ -19,7 +19,7 @@ GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(18, GPIO.OUT)
 
-if power_after == 1 and power_before == 0:
+if power_after == "1" and power_before == "0":
 	print "Turn amp and dac power sockets ON via 433MHz. Set GPIO trigger to 5v to bring amp out of standby."
 	subprocess.Popen(["/home/pi/codesend", "2175199"])
 	time.sleep(0.5)
@@ -27,7 +27,7 @@ if power_after == 1 and power_before == 0:
 	time.sleep(11)
 	GPIO.output(18, GPIO.HIGH)
 	time.sleep(1)
-elif power_after == 0 and power_before == 1:
+elif power_after == "0" and power_before == "1":
 	"Turn dac power socket OFF via 433MHz. Set GPIO trigger to 0v to send amp to standby."
 	GPIO.output(18, GPIO.LOW)
 	time.sleep(3)
