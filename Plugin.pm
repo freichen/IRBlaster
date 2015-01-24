@@ -1378,7 +1378,7 @@ sub commandCallback {
 	if( $iPowerOld ne $iPower) {
 
 		my @shell_output = `sudo /var/lib/squeezeboxserver/cache/InstalledPlugins/Plugins/IRBlaster/gpio_trigger.py ${name} ${iPowerOld} ${iPower} ${mainCommand} ${subCommand}`;
-		$log->debug( "Output from custom script: " . @shell_output[0]);
+		$log->debug( "Output from custom script: " . @shell_output);
 		
 		# if client is already playing and command was not play trigger ir 'play' command again as external component probably missed it while powering on
 		if( $request->isCommand([['play']]) ) {
