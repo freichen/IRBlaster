@@ -1380,13 +1380,13 @@ sub commandCallback {
 		# if client is already playing and command was not play trigger ir 'play' command again as external component probably missed it while powering on
 		if( $request->isCommand([['play']]) ) {
 
-			$log->debug( "*** IR-Blaster: commandCallback() handle play following power event.");
+			$log->debug( "Power switch triggered by play command.");
 			handlePlay( $client );
 
 		# ...and if not playing just trigger normal power event
 		} else {
 
-			$log->debug( "*** IR-Blaster: commandCallback() handle new power state: $iPower\n");
+			$log->debug( "Power command changed to new power state: $iPower");
 			handlePowerOnOff($client, $iPower);
 		}
 	}
@@ -1394,12 +1394,12 @@ sub commandCallback {
 	# Handle Play commands
 	if( $request->isCommand([['play']]) ) {
 
-		$log->debug( "*** IR-Blaster: commandCallback() Play.");
+		$log->debug( "Play command triggered.");
 		handlePlay( $client );
 	
 	# Handle Pause commands
 	} elsif( $request->isCommand([['pause']]) ) {
-		$log->debug( "*** IR-Blaster: commandCallback() Pause.");
+		$log->debug( "Pause command triggered.");
 
 		handlePause( $client) ;
 
@@ -1408,7 +1408,7 @@ sub commandCallback {
 	      || $request->isCommand([['client'], ['reconnect']])) {
 		my $subCmd = $request->{'_request'}[1];
 	
-		$log->debug( "*** IR-Blaster: commandCallback() client: $subCmd\n");
+		$log->debug( "New client or client reconnected: $subCmd.");
 			
 		# SqueezeCenter supports 'client new' and 'client reconnect' so we do not need
 		#  our polling function
