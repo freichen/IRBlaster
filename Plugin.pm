@@ -1357,9 +1357,12 @@ sub commandCallback {
 	my $request = shift;
 
 	my $client = $request->client();
+	my $name = $client->name();
+	my $mainCommand = $request->{'_request'}[0];
+	my $subCommand = $request->{'_request'}[0];
 
-	$log->debug( $client->name() . " triggered command: " . $request->{'_request'}[0]);
-	$log->debug( $client->name() . " triggered command: " . $request->{'_request'}[1]);
+	$log->debug( "${name} triggered command: ${mainCommand}");
+	$log->debug( "${name} triggered sub-com: ${subCommand}");
 	
 	# IRBlaster works with: SB2/3, Transporter and Fab4
 	if( !defined( $client) || !( ( $client->model() eq 'squeezebox2') || ( $client->model() eq 'transporter') || ( $client->model() eq 'fab4'))) {
@@ -1374,19 +1377,19 @@ sub commandCallback {
 	# Compare new power state with last known power state run external component power script
 	if( $iPowerOld ne $iPower) {
 
-		my @shell_output = `/var/lib/squeezeboxserver/cache/InstalledPlugins/Plugins/IRBlaster/custom-run-on-action.sh $client->name() $iPowerOld $iPower $request->{'_request'}[0] $request->{'_request'}[1]`;
+		my @shell_output = `/var/lib/squeezeboxserver/cache/InstalledPlugins/Plugins/IRBlaster/custom-run-on-action.sh ${name} ${iPowerOld} ${iPower} ${mainCommand} ${subCommand}`;
 		$log->debug( "Output from custom script: " . @shell_output[0]);
 		
 		# if client is already playing and command was not play trigger ir 'play' command again as external component probably missed it while powering on
 		if( $request->isCommand([['play']]) ) {
 
-			$log->debug( $client->name() . " play command changed power state to: " . $iPower);
+			$log->debug( "${name} play command changed power state to: ${iPower}"");
 			handlePlay( $client );
 
 		# ...and if not playing just trigger normal power event
 		} else {
 
-			$log->debug( $client->name() . " changed power state directly to: $iPower");
+			$log->debug( "${name} changed power state directly to: ${iPower}");
 			handlePowerOnOff($client, $iPower);
 		}
 	}
