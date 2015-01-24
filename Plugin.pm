@@ -1377,7 +1377,7 @@ sub commandCallback {
 	# Compare new power state with last known power state run external component power script
 	if( $iPowerOld ne $iPower) {
 
-		my @shell_output = `/var/lib/squeezeboxserver/cache/InstalledPlugins/Plugins/IRBlaster/custom-run-on-action.sh ${name} ${iPowerOld} ${iPower} ${mainCommand} ${subCommand}`;
+		my @shell_output = `/var/lib/squeezeboxserver/cache/InstalledPlugins/Plugins/IRBlaster/gpio_trigger.py ${name} ${iPowerOld} ${iPower} ${mainCommand} ${subCommand}`;
 		$log->debug( "Output from custom script: " . @shell_output[0]);
 		
 		# if client is already playing and command was not play trigger ir 'play' command again as external component probably missed it while powering on
