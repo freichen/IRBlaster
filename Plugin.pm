@@ -1359,7 +1359,7 @@ sub commandCallback {
 	my $client = $request->client();
 	my $name = $client->name();
 	my $mainCommand = $request->{'_request'}[0];
-	my $subCommand = $request->{'_request'}[0];
+	my $subCommand = $request->{'_request'}[1];
 
 	$log->debug( "${name} triggered command: ${mainCommand}");
 	$log->debug( "${name} triggered sub-com: ${subCommand}");
@@ -1380,14 +1380,9 @@ sub commandCallback {
 		my @shell_output = `sudo /var/lib/squeezeboxserver/cache/InstalledPlugins/Plugins/IRBlaster/gpio_trigger.py ${name} ${iPowerOld} ${iPower} ${mainCommand} ${subCommand}`;
 		$log->debug( "Output from custom script: " . @shell_output);
 		
-		# if client is already playing and command was not play trigger ir 'play' command again as external component probably missed it while powering on
-		if( $request->isCommand([['play']]) ) {
-
-			$log->debug( "${name} play command changed power state from ${iPowerOld} to ${iPower}");
-			handlePlay( $client );
-
-		# ...and if not playing just trigger normal power event
-		} else {
+		# if power event was not triggered by a play or playlist newsong event then do not handle play action
+		if( not( $request->isCommand([['play']]) ||
+		$request->isCommand([['playlist']], ['newsong']]) ) ) {
 
 			$log->debug( "${name} changed power state directly from ${iPowerOld} to ${iPower}");
 			handlePowerOnOff($client, $iPower);
@@ -1395,7 +1390,8 @@ sub commandCallback {
 	}
 
 	# Handle Play commands
-	if( $request->isCommand([['play']]) ) {
+	if( $request->isCommand([['play']]) ||
+		$request->isCommand([['playlist']], ['newsong']]) ) {
 
 		$log->debug( $client->name() . " handle IR for play command");
 		handlePlay( $client );
