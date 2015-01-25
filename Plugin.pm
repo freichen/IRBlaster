@@ -1391,14 +1391,14 @@ sub commandCallback {
 
 	# Handle Play commands
 	if( $request->isCommand([['play']]) ||
-		$request->isCommand([['playlist']], [['newsong']]) ) {
+		$request->isCommand([['newsong']]) ) {
 
 		$log->debug( $client->name() . " handle IR for play command");
 		handlePlay( $client );
 	
 	# Handle Pause commands
 	} elsif( $request->isCommand([['pause']]) ) {
-		
+
 		$log->debug( $client->name() . " handle IR for pause command");
 		handlePause( $client) ;
 
