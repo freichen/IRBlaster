@@ -7,7 +7,7 @@ import sys
 import time
 import subprocess
 
-print "Running ", sysargv[0], " script."
+print "Running ", sys.argv[0], " script."
 
 # slightly inelegant way of setting variables if they exist
 if sys.argv[1]:
