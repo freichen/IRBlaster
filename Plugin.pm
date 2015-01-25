@@ -1382,7 +1382,7 @@ sub commandCallback {
 		
 		# if power event was not triggered by a play or playlist newsong event then do not handle play action
 		if( not( $request->isCommand([['play']]) ||
-		$request->isCommand([['playlist']], ['newsong']]) ) ) {
+		$request->isCommand([['playlist']], [['newsong']]) ) ) {
 
 			$log->debug( "${name} changed power state directly from ${iPowerOld} to ${iPower}");
 			handlePowerOnOff($client, $iPower);
@@ -1391,15 +1391,15 @@ sub commandCallback {
 
 	# Handle Play commands
 	if( $request->isCommand([['play']]) ||
-		$request->isCommand([['playlist']], ['newsong']]) ) {
+		$request->isCommand([['playlist']], [['newsong']]) ) {
 
 		$log->debug( $client->name() . " handle IR for play command");
 		handlePlay( $client );
 	
 	# Handle Pause commands
 	} elsif( $request->isCommand([['pause']]) ) {
+		
 		$log->debug( $client->name() . " handle IR for pause command");
-
 		handlePause( $client) ;
 
 	# Get newclient events
