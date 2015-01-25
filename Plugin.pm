@@ -1382,7 +1382,7 @@ sub commandCallback {
 		
 		# if power event was not triggered by a play or playlist newsong event then do not handle play action
 		if( not( $mainCommand eq 'play' ||
-		( ($mainCommand eq 'playlist') && ($subCommand eq 'newsong') ) ) ) {
+		( $mainCommand eq 'playlist' && $subCommand eq 'newsong' ) ) ) {
 
 			$log->debug( "${name} changed power state directly from ${iPowerOld} to ${iPower}");
 			handlePowerOnOff($client, $iPower);
@@ -1391,7 +1391,7 @@ sub commandCallback {
 
 	# Handle Play commands
 	if( $mainCommand eq 'play' ||
-		( ($mainCommand eq 'playlist') && ($subCommand eq 'newsong') ) ) {
+		( $mainCommand eq 'playlist' && $subCommand eq 'newsong' ) ) {
 
 		$log->debug( $client->name() . " handle IR for play command");
 		handlePlay( $client );
