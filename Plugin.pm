@@ -1378,7 +1378,7 @@ sub commandCallback {
 	if( $iPowerOld ne $iPower) {
 
 		my @shell_output = `sudo /var/lib/squeezeboxserver/cache/InstalledPlugins/Plugins/IRBlaster/gpio_trigger.py ${name} ${iPowerOld} ${iPower} ${mainCommand} ${subCommand}`;
-		$log->debug( "Output from custom script: " . @shell_output[0]);
+		$log->debug( "Output from custom script: " . @shell_output);
 		
 		# if power event was not triggered by a play or playlist newsong event then do not handle play action
 		if( not( $mainCommand eq 'play' ||
