@@ -7,8 +7,6 @@ import sys
 import time
 import subprocess
 
-print "Running ", sys.argv[0], " script."
-
 # slightly inelegant way of setting variables if they exist
 if len(sys.argv) > 1:
 	client_name = sys.argv[1]
