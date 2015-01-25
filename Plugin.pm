@@ -1382,7 +1382,7 @@ sub commandCallback {
 		
 		# if power event was not triggered by a play or playlist newsong event then do not handle play action
 		if( not( $mainCommand == 'play' ||
-		($mainCommand == 'playlist') && ($subCommand == 'newsong') ) ) ) {
+		( ($mainCommand == 'playlist') && ($subCommand == 'newsong') ) ) ) {
 
 			$log->debug( "${name} changed power state directly from ${iPowerOld} to ${iPower}");
 			handlePowerOnOff($client, $iPower);
