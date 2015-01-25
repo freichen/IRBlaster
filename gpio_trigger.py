@@ -7,11 +7,27 @@ import sys
 import time
 import subprocess
 
-client_name = sys.argv[1]
-power_before = sys.argv[2]
-power_after = sys.argv[3]
-main_command = sys.argv[4]
-sub_command = sys.argv[5]
+# slightly inelegant way of setting variables if they exist
+if sys.argv[1]:
+	client_name = sys.argv[1]
+else:
+	client_name = ""
+if sys.argv[2]:
+	power_before = sys.argv[2]
+else:
+	power_before = ""
+if sys.argv[3]:
+	power_after = sys.argv[3]
+else:
+	power_after = ""
+if sys.argv[4]:
+	main_command = sys.argv[4]
+else:
+	main_command = ""
+if sys.argv[5]:
+	sub_command = sys.argv[5]
+else:
+	sub_command = ""
 
 print client_name, power_before, power_after, main_command, sub_command
 
