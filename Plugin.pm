@@ -1391,7 +1391,7 @@ sub commandCallback {
 
 	# Handle Play commands
 	if( $mainCommand == 'play' ||
-		( $mainCommand == 'playlist' && $subCommand == 'newsong' )  {
+		( $mainCommand == 'playlist' && $subCommand == 'newsong' ) ) {
 
 		$log->debug( $client->name() . " handle IR for play command");
 		handlePlay( $client );
