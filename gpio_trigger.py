@@ -24,7 +24,7 @@ if len(sys.argv) > 4:
 	main_command = sys.argv[4]
 else:
 	main_command = ""
-if len(sys.argv) > 4:
+if len(sys.argv) > 5:
 	sub_command = sys.argv[5]
 else:
 	sub_command = ""
