@@ -1,0 +1,226 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<title>Remote Control</title>
+<head>
+<meta http-eqiv="content-type" content="text/html"; charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Remote Control">
+<meta name="author" content="Kefa">
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+<script type="text/javascript">
+
+function press_button(button_pressed, command_to_run) {
+
+    console.log("Button pressed: " + button_pressed.value);
+    console.log("Run command: " + command_to_run[1]);
+
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("POST", "/jsonrpc.js");
+    xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xmlhttp.onload = function () {
+        console.log(this.responseText);
+    };
+    xmlhttp.send(JSON.stringify({ "id": 1, "method": "slim.request", "params": command_to_run }));
+};
+
+</script>
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Remote Control</h1>
+    <h3>YouView</h3>
+    <p>
+        <div class="row">
+            <div class="col-xs-2">
+                <button type="button" class="btn btn-danger" onClick='press_button(this, [ "", [ "irblaster", "buttons", "mdac-discrete" ] ])'><span class="glyphicon glyphicon-off"></span></button>
+            </div>
+        </div>
+    </p>
+    <p>
+        <div class="row">
+            <div class="col-xs-2">
+                <button type="button" class="btn btn-default" onClick='press_button(this, [ "", [ "irblaster", "buttons", "mdac-discrete" ] ])'><span class="glyphicon glyphicon-arrow-up"></span></button>
+            </div>
+        </div>
+    </p>
+    <p>
+        <div class="row">
+            <div class="col-xs-2">
+                <button type="button" class="btn btn-default" onClick='press_button(this, [ "", [ "irblaster", "buttons", "mdac-discrete" ] ])'><span class="glyphicon glyphicon-arrow-left"></span></button>
+            </div>
+            <div class="col-xs-2">
+                <button type="button" class="btn btn-default" onClick='press_button(this, [ "", [ "irblaster", "buttons", "mdac-discrete" ] ])'><span class="glyphicon glyphicon-arrow-right"></span></button>
+            </div>
+        </div>
+    </p>
+    <p>
+        <div class="row">
+            <div class="col-xs-2">
+                <button type="button" class="btn btn-default" onClick='press_button(this, [ "", [ "irblaster", "buttons", "mdac-discrete" ] ])'><span class="glyphicon glyphicon-arrow-down"></span></button>
+            </div>
+        </div>
+    </p>
+    <p>
+        <div class="row">
+            <div class="col-xs-2">
+                <button type="button" class="btn btn-default" onClick='press_button(this, [ "", [ "irblaster", "buttons", "mdac-discrete" ] ])'>OK</button>
+            </div>
+            <div class="col-xs-2">
+                <button type="button" class="btn btn-default" onClick='press_button(this, [ "", [ "irblaster", "buttons", "mdac-discrete" ] ])'>Back</button>
+            </div>
+            <div class="col-xs-2">
+                <button type="button" class="btn btn-default" onClick='press_button(this, [ "", [ "irblaster", "buttons", "mdac-discrete" ] ])'>Close</button>
+            </div>
+            <div class="col-xs-2">
+                <button type="button" class="btn btn-danger" onClick='press_button(this, [ "", [ "irblaster", "buttons", "mdac-discrete" ] ])'>Delete</button>
+            </div>
+        </div>
+    </p>
+    <p>
+        <div class="row">
+            <div class="col-xs-2">
+                <button type="button" class="btn btn-default" onClick='press_button(this, [ "", [ "irblaster", "buttons", "mdac-discrete" ] ])'>1</button>
+            </div>
+            <div class="col-xs-2">
+                <button type="button" class="btn btn-default" onClick='press_button(this, [ "", [ "irblaster", "buttons", "mdac-discrete" ] ])'>2</button>
+            </div>
+            <div class="col-xs-2">
+                <button type="button" class="btn btn-default" onClick='press_button(this, [ "", [ "irblaster", "buttons", "mdac-discrete" ] ])'>3</button>
+            </div>
+        </div>
+    </p>
+    <p>
+        <div class="row">
+            <div class="col-xs-2">
+                <button type="button" class="btn btn-default" onClick='press_button(this, [ "", [ "irblaster", "buttons", "mdac-discrete" ] ])'>4</button>
+            </div>
+            <div class="col-xs-2">
+                <button type="button" class="btn btn-default" onClick='press_button(this, [ "", [ "irblaster", "buttons", "mdac-discrete" ] ])'>5</button>
+            </div>
+            <div class="col-xs-2">
+                <button type="button" class="btn btn-default" onClick='press_button(this, [ "", [ "irblaster", "buttons", "mdac-discrete" ] ])'>6</button>
+            </div>
+        </div>
+    </p>
+    <p>
+        <div class="row">
+            <div class="col-xs-2">
+                <button type="button" class="btn btn-default" onClick='press_button(this, [ "", [ "irblaster", "buttons", "mdac-discrete" ] ])'>7</button>
+            </div>
+            <div class="col-xs-2">
+                <button type="button" class="btn btn-default" onClick='press_button(this, [ "", [ "irblaster", "buttons", "mdac-discrete" ] ])'>8</button>
+            </div>
+            <div class="col-xs-2">
+                <button type="button" class="btn btn-default" onClick='press_button(this, [ "", [ "irblaster", "buttons", "mdac-discrete" ] ])'>9</button>
+            </div>
+        </div>
+    </p>
+    <p>
+        <div class="row">
+            <div class="col-xs-2">
+                <button type="button" class="btn btn-primary" onClick='press_button(this, [ "", [ "irblaster", "buttons", "mdac-discrete" ] ])'>Y</button>
+            </div>
+            <div class="col-xs-2">
+                <button type="button" class="btn btn-default" onClick='press_button(this, [ "", [ "irblaster", "buttons", "mdac-discrete" ] ])'>0</button>
+            </div>
+            <div class="col-xs-1">
+                <button type="button" class="btn btn-default" onClick='press_button(this, [ "", [ "irblaster", "buttons", "mdac-discrete" ] ])'><span class="glyphicon glyphicon-search"></span></button>
+            </div>
+        </div>
+    </p>
+    <h3>Audio</h3>
+        <p>
+        <div class="row">
+            <div class="col-xs-2">
+                <button type="button" class="btn btn-danger" onClick='press_button(this, [ "", [ "irblaster", "buttons", "mdac-discrete" ] ])'><span class="glyphicon glyphicon-off"></span></button>
+            </div>
+        </div>
+    </p>
+    <p>
+        <div class="row">
+            <div class="col-xs-2">
+                <button type="button" class="btn btn-default" onClick='press_button(this, [ "", [ "irblaster", "buttons", "mdac-discrete" ] ])'>TV</button>
+            </div>
+            <div class="col-xs-2">
+                <button type="button" class="btn btn-default" onClick='press_button(this, [ "", [ "irblaster", "buttons", "mdac-discrete" ] ])'>Music</button>
+            </div>
+        </div>
+    </p>
+    <p>
+        <div class="row">
+            <div class="col-xs-2">
+                <button type="button" class="btn btn-default" onClick='press_button(this, [ "", [ "irblaster", "buttons", "mdac-discrete" ] ])'><span class="glyphicon glyphicon-volume-down"></span></button>
+            </div>
+            <div class="col-xs-2">
+                <button type="button" class="btn btn-default" onClick='press_button(this, [ "", [ "irblaster", "buttons", "mdac-discrete" ] ])'><span class="glyphicon glyphicon-volume-up"></span></button>
+            </div>
+        </div>
+    </p>
+    <h3>Squeezebox</h3>
+    <p>
+        <div class="row">
+            <div class="col-xs-2">
+                <button type="button" class="btn btn-default" onClick='press_button(this, [ "", [ "irblaster", "buttons", "mdac-discrete" ] ])'><span class="glyphicon glyphicon-step-backward"></span></button>
+            </div>
+            <div class="col-xs-2">
+                <button type="button" class="btn btn-default" onClick='press_button(this, [ "", [ "irblaster", "buttons", "mdac-discrete" ] ])'><span class="glyphicon glyphicon-play"></span></button>
+            </div>
+            <div class="col-xs-2">
+                <button type="button" class="btn btn-default" onClick='press_button(this, [ "", [ "irblaster", "buttons", "mdac-discrete" ] ])'><span class="glyphicon glyphicon-pause"></span></button>
+            </div>
+            <div class="col-xs-2">
+                <button type="button" class="btn btn-default" onClick='press_button(this, [ "", [ "irblaster", "buttons", "mdac-discrete" ] ])'><span class="glyphicon glyphicon-step-forward"></span></button>
+            </div>
+        </div>
+    </p>
+    <p>
+        <div class="row">
+            <div class="col-xs-2">
+                <button type="button" class="btn btn-default" onClick='press_button(this, [ "", [ "irblaster", "buttons", "mdac-discrete" ] ])'><span class="glyphicon glyphicon-arrow-up"></span></button>
+            </div>
+        </div>
+    </p>
+    <p>
+        <div class="row">
+            <div class="col-xs-2">
+                <button type="button" class="btn btn-default" onClick='press_button(this, [ "", [ "irblaster", "buttons", "mdac-discrete" ] ])'><span class="glyphicon glyphicon-arrow-left"></span></button>
+            </div>
+            <div class="col-xs-2">
+                <button type="button" class="btn btn-default" onClick='press_button(this, [ "", [ "irblaster", "buttons", "mdac-discrete" ] ])'><span class="glyphicon glyphicon-arrow-right"></span></button>
+            </div>
+        </div>
+    </p>
+    <p>
+        <div class="row">
+            <div class="col-xs-2">
+                <button type="button" class="btn btn-default" onClick='press_button(this, [ "", [ "irblaster", "buttons", "mdac-discrete" ] ])'><span class="glyphicon glyphicon-arrow-down"></span></button>
+            </div>
+        </div>
+    </p>
+    <p>
+        <div class="row">
+            <div class="col-xs-2">
+                <button type="button" class="btn btn-default" onClick='press_button(this, [ "", [ "irblaster", "buttons", "mdac-discrete" ] ])'>OK</button>
+            </div>
+            <div class="col-xs-2">
+                <button type="button" class="btn btn-default" onClick='press_button(this, [ "", [ "irblaster", "buttons", "mdac-discrete" ] ])'>Back</button>
+            </div>
+        </div>
+    </p>
+    <p>
+        <div class="row">
+            <div class="col-xs-2">
+                <button type="button" class="btn btn-default" onClick='press_button(this, [ "", [ "irblaster", "buttons", "mdac-discrete" ] ])'>Radio 3</button>
+            </div>
+            <div class="col-xs-2">
+                <button type="button" class="btn btn-default" onClick='press_button(this, [ "", [ "irblaster", "buttons", "mdac-discrete" ] ])'>Radio 4</button>
+            </div>
+        </div>
+    </p>
+
+</div>
+</body>
+</html> 
