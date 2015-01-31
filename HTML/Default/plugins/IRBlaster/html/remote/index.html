@@ -30,235 +30,245 @@ function press_button(button_pressed, command_to_run) {
 </head>
 <body>
 <div class="container text-center">
-    <h3>Remote Control</h3  >
-    <p>
-        <h4>YouView</h4 >
-            <div class="row">         
-                <div class="col-xs-12 text-center">
+    <h3>Remote Control</h3>
+    <hr>
+    <h4>YouView</h4>
+        <p>
+            <div class="row">
+                <div class="col-xs-2 col-xs-offset-3 text-center"></div>      
+                <div class="col-xs-2 text-center">
                     <button type="button" class="btn btn-danger" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "youview", "POWER" ] ])'><span class="glyphicon glyphicon-off"></span></button>
                 </div>
+                <div class="col-xs-2 text-center"></div>
             </div>
         </p>
         <p>
             <div class="row">
-                <div class="col-xs-1 col-xs-offset-4 text-center">
+                <div class="col-xs-2 col-xs-offset-3 text-center">
                     <button type="button" class="btn btn-default" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "youview", "GOTO" ] ])'><span class="glyphicon glyphicon-search"></span></button>
                 </div>
                 <div class="col-xs-2 text-center">
                     <button type="button" class="btn btn-primary" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "youview", "MENU" ] ])'>Y</button>
                 </div>
-                <div class="col-xs-1 text-center">
+                <div class="col-xs-2 text-center">
                     <button type="button" class="btn btn-default" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "youview", "EPG" ] ])'><span class="glyphicon glyphicon-th-list"></span></button>
                 </div>
             </div>
         </p>
         <p>
             <div class="row">
-                <div class="col-xs-12 text-center">
+                <div class="col-xs-2 col-xs-offset-3 text-center"></div>
+                <div class="col-xs-2 text-center">
                     <button type="button" class="btn btn-default" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "youview", "CURSOR_UP" ] ])'><span class="glyphicon glyphicon-arrow-up"></span></button>
                 </div>
+                <div class="col-xs-2 text-center"></div>
             </div>
         </p>
         <p>
             <div class="row">
-                <div class="col-xs-1 col-xs-offset-4 text-center">
+                <div class="col-xs-2 col-xs-offset-3 text-center">
                     <button type="button" class="btn btn-default" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "youview", "CURSOR_LEFT" ] ])'><span class="glyphicon glyphicon-arrow-left"></span></button>
                 </div>
                 <div class="col-xs-2 text-center">
                     <button type="button" class="btn btn-default" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "youview", "OK" ] ])'><span class="glyphicon glyphicon-ok"></span></button>
                 </div>
-                <div class="col-xs-1 text-center">
+                <div class="col-xs-2 text-center">
                     <button type="button" class="btn btn-default" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "youview", "CURSOR_RIGHT" ] ])'><span class="glyphicon glyphicon-arrow-right"></span></button>
                 </div>
             </div>
         </p>
         <p>
             <div class="row">
-                <div class="col-xs-12 text-center">
+                <div class="col-xs-2 col-xs-offset-3 text-center"></div>
+                <div class="col-xs-2 text-center">
                     <button type="button" class="btn btn-default" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "youview", "CURSOR_DOWN" ] ])'><span class="glyphicon glyphicon-arrow-down"></span></button>
                 </div>
             </div>
         </p>
         <p>
             <div class="row">
-                <div class="col-xs-1 col-xs-offset-4 text-center">
+                <div class="col-xs-3 col-xs-offset-2 text-center">
                     <button type="button" class="btn btn-default" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "youview", "BACK" ] ])'>Back</button>
                 </div>
                <div class="col-xs-2 text-center">
                     <button type="button" class="btn btn-default" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "youview", "INFO" ] ])'><span class="glyphicon glyphicon-info-sign"></span></button>
                 </div>
-                <div class="col-xs-1 text-center">
+                <div class="col-xs-3 text-center">
                     <button type="button" class="btn btn-default" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "youview", "ESCAPE" ] ])'>Close</button>
                 </div>
             </div>
         </p>
         <p>
             <div class="row">
-                <div class="col-xs-1 col-xs-offset-4 text-center">
+                <div class="col-xs-3 text-center">
                     <button type="button" class="btn btn-default" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "youview", "REWIND" ] ])'><span class="glyphicon glyphicon-backward"></span></button>
                 </div>
-                <div class="col-xs-1 text-center">
+                <div class="col-xs-3 text-center">
                     <button type="button" class="btn btn-default" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "youview", "PLAY" ] ])'><span class="glyphicon glyphicon-play"></span></button>
                 </div>
-                <div class="col-xs-1 text-center">
+                <div class="col-xs-3 text-center">
                     <button type="button" class="btn btn-default" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "youview", "PAUSE" ] ])'><span class="glyphicon glyphicon-pause"></span></button>
                 </div>
-                <div class="col-xs-1 text-center">
+                <div class="col-xs-3 text-center">
                     <button type="button" class="btn btn-default" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "youview", "FASTFORWARD" ] ])'><span class="glyphicon glyphicon-forward"></span></button>
                 </div>
             </div>
         </p>
         <p>
             <div class="row">
-                <div class="col-xs-1 col-xs-offset-5 text-center">
+                <div class="col-xs-2 col-xs-offset-4 text-center">
                     <button type="button" class="btn btn-danger" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "youview", "RECORD" ] ])'><span class="glyphicon glyphicon-record"></span></button>
                 </div>
-                <div class="col-xs-1 text-center">
+                <div class="col-xs-2 text-center">
                     <button type="button" class="btn btn-default" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "youview", "STOP" ] ])'><span class="glyphicon glyphicon-stop"></span></button>
                 </div>
             </div>
         </p>
         <p>
             <div class="row">
-
-            </div>
-        </p>
-        <p>
-            <div class="row">
-                <div class="col-xs-1 col-xs-offset-4 text-center">
+                <div class="col-xs-4 text-center">
                     <button type="button" class="btn btn-default" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "youview", "DIKI_KP_1" ] ])'>1</button>
                 </div>
-                <div class="col-xs-2 text-center">
+                <div class="col-xs-4 text-center">
                     <button type="button" class="btn btn-default" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "youview", "DIKI_KP_2" ] ])'>2 abc</button>
                 </div>
-                <div class="col-xs-1 text-center">
+                <div class="col-xs-4 text-center">
                     <button type="button" class="btn btn-default" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "youview", "DIKI_KP_3" ] ])'>3 def</button>
                 </div>
             </div>
         </p>
         <p>
             <div class="row">
-                <div class="col-xs-1 col-xs-offset-4 text-center">
+                <div class="col-xs-4 text-center">
                     <button type="button" class="btn btn-default" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "youview", "DIKI_KP_4" ] ])'>4 ghi</button>
                 </div>
-                <div class="col-xs-2 text-center">
+                <div class="col-xs-4 text-center">
                     <button type="button" class="btn btn-default" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "youview", "DIKI_KP_5" ] ])'>5 jkl</button>
                 </div>
-                <div class="col-xs-1 text-center">
+                <div class="col-xs-4 text-center">
                     <button type="button" class="btn btn-default" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "youview", "DIKI_KP_6" ] ])'>6 mno</button>
                 </div>
             </div>
         </p>
         <p>
             <div class="row">
-                <div class="col-xs-1 col-xs-offset-4 text-center">
+                <div class="col-xs-4 col-text-center">
                     <button type="button" class="btn btn-default" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "youview", "DIKI_KP_7" ] ])'>7 pqrs</button>
                 </div>
-                <div class="col-xs-2 text-center">
+                <div class="col-xs-4 text-center">
                     <button type="button" class="btn btn-default" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "youview", "DIKI_KP_8" ] ])'>8 tuv</button>
                 </div>
-                <div class="col-xs-1 text-center">
+                <div class="col-xs-4 text-center">
                     <button type="button" class="btn btn-default" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "youview", "DIKI_KP_9" ] ])'>9 wxyz</button>
                 </div>
             </div>
         </p>
         <p>
             <div class="row">
-                <div class="col-xs-2 col-xs-offset-5 text-center">
+                <div class="col-xs-4 col-xs-offset-4 text-center">
                     <button type="button" class="btn btn-default" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "youview", "DIKI_KP_0" ] ])'>0 _</button>
                 </div>
-                <div class="col-xs-1 text-center">
+                <div class="col-xs-4 text-center">
                     <button type="button" class="btn btn-danger" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "mdac-discrete" ] ])'><span class="glyphicon glyphicon-trash"></span></button>
                 </div>
             </div>
         </p>
-        <h4>Audio</h4>
+    <hr>
+    <h4>Audio</h4>
         <p>
             <div class="row">
-                <div class="col-xs-12 text-center">
+                <div class="col-xs-4 text-center"></div>
+                <div class="col-xs-4 text-center">
                     <button type="button" class="btn btn-danger" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "mdac-discrete" ] ])'><span class="glyphicon glyphicon-off"></span></button>
                 </div>
+                <div class="col-xs-4 text-center"></div>
             </div>
         </p>
         <p>
             <div class="row">
-                <div class="col-xs-1 col-xs-offset-5 text-center">
-                    <button type="button" class="btn btn-default" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "mdac-discrete", "volume-up" ] ])'><span class="glyphicon glyphicon-volume-up"></span></button>
-                </div>
-                <div class="col-xs-1 text-center">
-                    <button type="button" class="btn btn-default" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "mdac-discrete", "input-coax1" ] ])'><span class="glyphicon glyphicon-music"></span></button>
-                </div>
-            </div>
-        </p>
-        <p>
-            <div class="row">
-                <div class="col-xs-1 col-xs-offset-5 text-center">
+                <div class="col-xs-2 col-xs-offset-1 text-center">
                     <button type="button" class="btn btn-default" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "mdac-discrete", "volume-down" ] ])'><span class="glyphicon glyphicon-volume-down"></span></button>
                 </div>
-                <div class="col-xs-1 text-center">
+                <div class="col-xs-2 text-center">
+                    <button type="button" class="btn btn-default" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "mdac-discrete", "volume-up" ] ])'><span class="glyphicon glyphicon-volume-up"></span></button>
+                </div>
+                <div class="col-xs-2 text-center"></div>
+                <div class="col-xs-2 text-center">
+                    <button type="button" class="btn btn-default" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "mdac-discrete", "input-coax1" ] ])'><span class="glyphicon glyphicon-music"></span></button>
+                </div>
+                <div class="col-xs-2 text-center">
                     <button type="button" class="btn btn-default" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "mdac-discrete", "input-opt1" ] ])'><span class="glyphicon glyphicon-picture"></span></button>
                 </div>
             </div>
         </p>
-        <h4>Squeezebox</h4>
+    <hr>
+    <h4>Squeezebox</h4>
         <p>
             <div class="row">
-                <div class="col-xs-1 col-xs-offset-4 text-center">
+                <div class="col-xs-3 text-center">
                     <button type="button" class="btn btn-default" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "mdac-discrete" ] ])'><span class="glyphicon glyphicon-step-backward"></span></button>
                 </div>
-                <div class="col-xs-1 text-center">
+                <div class="col-xs-3 text-center">
                     <button type="button" class="btn btn-default" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "mdac-discrete" ] ])'><span class="glyphicon glyphicon-play"></span></button>
                 </div>
-                <div class="col-xs-1 text-center">
+                <div class="col-xs-3 text-center">
                     <button type="button" class="btn btn-default" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "mdac-discrete" ] ])'><span class="glyphicon glyphicon-pause"></span></button>
                 </div>
-                <div class="col-xs-1 text-center">
+                <div class="col-xs-3 text-center">
                     <button type="button" class="btn btn-default" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "mdac-discrete" ] ])'><span class="glyphicon glyphicon-step-forward"></span></button>
                 </div>
             </div>
         </p>
         <p>
             <div class="row">
-                <div class="col-xs-12 text-center">
+                <div class="col-xs-2 col-xs-offset-3 text-center"></div>
+                <div class="col-xs-2 text-center">
                     <button type="button" class="btn btn-default" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "mdac-discrete" ] ])'><span class="glyphicon glyphicon-arrow-up"></span></button>
                 </div>
+                <div class="col-xs-2 text-center"></div>
             </div>
         </p>
         <p>
             <div class="row">
-                <div class="col-xs-2 col-xs-offset-4 text-center">
+                <div class="col-xs-2 col-xs-offset-3 text-center">
                     <button type="button" class="btn btn-default" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "mdac-discrete" ] ])'><span class="glyphicon glyphicon-arrow-left"></span></button>
                 </div>
-                <div class="col-xs-2">
+                <div class="col-xs-2 text-center">
+                    <button type="button" class="btn btn-default" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "mdac-discrete" ] ])'><span class="glyphicon glyphicon-ok"></span></button>
+                </div>
+                <div class="col-xs-2 text-center">
                     <button type="button" class="btn btn-default" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "mdac-discrete" ] ])'><span class="glyphicon glyphicon-arrow-right"></span></button>
                 </div>
             </div>
         </p>
         <p>
             <div class="row">
-                <div class="col-xs-12 text-center">
+                <div class="col-xs-2 col-xs-offset-3 text-center"></div>
+                <div class="col-xs-2 text-center">
                     <button type="button" class="btn btn-default" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "mdac-discrete" ] ])'><span class="glyphicon glyphicon-arrow-down"></span></button>
                 </div>
+                <div class="col-xs-2 text-center"></div>
             </div>
         </p>
         <p>
             <div class="row">
-                <div class="col-xs-2 col-xs-offset-4 text-center">
-                    <button type="button" class="btn btn-default" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "mdac-discrete" ] ])'>OK</button>
-                </div>
-                <div class="col-xs-2 text center">
-                    <button type="button" class="btn btn-default" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "mdac-discrete" ] ])'>Radio 3</button>
-                </div>
-            </div>
-        </p>
-        <p>
-            <div class="row">
-                <div class="col-xs-2 col-xs-offset-4 text-center">
+                <div class="col-xs-4 text-center"></div>
+                <div class="col-xs-4 text-center">
                     <button type="button" class="btn btn-default" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "mdac-discrete" ] ])'>Back</button>
                 </div>
-                <div class="col-xs-2 text-center">
+                <div class="col-xs-4 text-center"></div>
+            </div>
+        </p>
+        <p>
+            <div class="row">
+                <div class="col-xs-3 text-center"></div>
+                <div class="col-xs-3 text center">
+                    <button type="button" class="btn btn-default" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "mdac-discrete" ] ])'>Radio 3</button>
+                </div>
+                <div class="col-xs-3 text-center">
                     <button type="button" class="btn btn-default" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "mdac-discrete" ] ])'>Radio 4</button>
                 </div>
+                <div class="col-xs-3 text-center"></div>
             </div>
         </p>
 </div>
