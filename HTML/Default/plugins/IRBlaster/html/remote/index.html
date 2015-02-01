@@ -23,7 +23,14 @@ function press_button(button_pressed, command_to_run) {
     xmlhttp.onload = function () {
         console.log(this.responseText);
     };
-    xmlhttp.send(JSON.stringify({ "id": 1, "method": "slim.request", "params": command_to_run }));
+    if (button_pressed.id == "confirm") {
+        if (window.confirm("Are you sure you want to delete?")) {
+            xmlhttp.send(JSON.stringify({ "id": 1, "method": "slim.request", "params": command_to_run }));
+        }
+    }
+    else {
+        xmlhttp.send(JSON.stringify({ "id": 1, "method": "slim.request", "params": command_to_run }));
+    }
 };
 
 </script>
@@ -204,7 +211,7 @@ function press_button(button_pressed, command_to_run) {
                         <button type="button" class="btn btn-lg btn-default" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "youview", "DIKI_KP_0" ] ])'>&nbsp;&nbsp;0 _&nbsp;&nbsp;</button>
                     </div>
                     <div class="col-xs-4 text-center">
-                        <button type="button" class="btn btn-lg btn-danger" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "youview", "F4" ] ])'>&nbsp;<span class="glyphicon glyphicon-trash"></span>&nbsp;</button>
+                        <button type="button" class="btn btn-lg btn-danger" id="confirm" onClick='press_button(this, [ "00:04:20:06:09:dd", [ "irblaster", "send", "youviewraw", "DELETE" ] ])'>&nbsp;<span class="glyphicon glyphicon-trash"></span>&nbsp;</button>
                     </div>
                 </div>
             </p>
