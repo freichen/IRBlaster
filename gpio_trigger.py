@@ -6,28 +6,26 @@ from pylms.player import Player
 import sys
 import time
 import subprocess
+import requests
 
-# slightly inelegant way of setting variables if they exist
+# initialise variables
+client_name = ""
+power_before = ""
+power_after = ""
+main_command = ""
+sub_command = ""
+
+# set variables if provided as command line parameters
 if len(sys.argv) > 1:
 	client_name = sys.argv[1]
-else:
-	client_name = ""
 if len(sys.argv) > 2:
 	power_before = sys.argv[2]
-else:
-	power_before = ""
 if len(sys.argv) > 3:
 	power_after = sys.argv[3]
-else:
-	power_after = ""
 if len(sys.argv) > 4:
 	main_command = sys.argv[4]
-else:
-	main_command = ""
 if len(sys.argv) > 5:
 	sub_command = sys.argv[5]
-else:
-	sub_command = ""
 
 print client_name, power_before, power_after, main_command, sub_command
 
@@ -36,17 +34,24 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(18, GPIO.OUT)
 
 if power_after == "1" and power_before == "0":
-	print "Turn amp and dac power sockets ON via 433MHz. Set GPIO trigger to 5v to bring amp out of standby."
+	print "Turn amp and dac power sockets ON via 433MHz."
 	subprocess.Popen(["/home/pi/codesend", "2175199"])
 	time.sleep(0.5)
 	subprocess.Popen(["/home/pi/codesend", "2175191"])
 	time.sleep(11)
+	print "Set GPIO trigger to 5v to bring amp out of standby."
 	GPIO.output(18, GPIO.HIGH)
 	time.sleep(1)
 elif power_after == "0" and power_before == "1":
-	"Turn dac power socket OFF via 433MHz. Set GPIO trigger to 0v to send amp to standby."
+	print "Turn the telly off by making upnp http post request."
+	payload = '<?xml version="1.0" encoding="utf-8"?><s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body><u:X_SendKey xmlns:u="urn:panasonic-com:service:p00NetworkControl:1#X_SendKey"><X_KeyEvent>NRC_POWER-ONOFF</X_KeyEvent></u:X_SendKey></s:Body></s:Envelope>'
+	headers = { "SOAPACTION" : "urn:panasonic-com:service:p00NetworkControl:1#X_SendKey" }
+	url = 'http://tv.home:55000/nrc/control_0'
+	r = requests.post(url, data=payload, headers=headers)
+	print "Set GPIO trigger to 0v to send amp in to standby."
 	GPIO.output(18, GPIO.LOW)
 	time.sleep(3)
+	print "Turn dac power socket OFF via 433MHz transmitter."
 	subprocess.Popen(["/home/pi/codesend", "2175198"])
 	time.sleep(0.5)
 else:
