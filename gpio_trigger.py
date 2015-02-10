@@ -6,8 +6,7 @@ from pylms.player import Player
 import sys
 import time
 import subprocess
-import urllib
-import urllib2
+from urllib2 import Request, urlopen, URLError
 
 # initialise variables
 client_name = ""
