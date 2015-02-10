@@ -48,10 +48,10 @@ elif power_after == "0" and power_before == "1":
 	data = '<?xml version="1.0" encoding="utf-8"?><s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body><u:X_SendKey xmlns:u="urn:panasonic-com:service:p00NetworkControl:1#X_SendKey"><X_KeyEvent>NRC_POWER-ONOFF</X_KeyEvent></u:X_SendKey></s:Body></s:Envelope>'
 	headers = { "SOAPACTION" : "urn:panasonic-com:service:p00NetworkControl:1#X_SendKey" }
 	url = 'http://tv.home:55000/nrc/control_0'
-	try: urllib2.Request(url, data, headers)
+	req = urllib2.Request(url, data, headers)
+	try: urllib2.urlopen(req)
 	except URLError as e:
-		print e.reason 
-	response = urllib2.urlopen(req)
+		print e.reason
 	print "Set GPIO trigger to 0v to send amp in to standby."
 	GPIO.output(18, GPIO.LOW)
 	time.sleep(3)
