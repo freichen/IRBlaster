@@ -46,7 +46,7 @@ if power_after == "1" and power_before == "0":
 elif power_after == "0" and power_before == "1":
 	print "Turn the telly off by making upnp http post request."
 	data = '<?xml version="1.0" encoding="utf-8"?><s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body><u:X_SendKey xmlns:u="urn:panasonic-com:service:p00NetworkControl:1#X_SendKey"><X_KeyEvent>NRC_POWER-ONOFF</X_KeyEvent></u:X_SendKey></s:Body></s:Envelope>'
-	headers = { "SOAPACTION" : "urn:panasonic-com:service:p00NetworkControl:1#X_SendKey" }
+	headers = { "SOAPACTION" : "\"urn:panasonic-com:service:p00NetworkControl:1#X_SendKey\" }
 	url = 'http://tv.home:55000/nrc/control_0'
 	req = urllib2.Request(url, data, headers)
 	try: urllib2.urlopen(req)
