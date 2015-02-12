@@ -1373,7 +1373,7 @@ sub commandCallback {
 
 	# Set new power state and play state
 	my $iPower = $client->power();
-	my $iPlaying = $client->iPlaying();
+	my $iPlaying = $client->isPlaying();
 
 	# Save the new old play and power states before resetting with current states
 	my $iPowerOld = $iOldPowerState{$client};
