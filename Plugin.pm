@@ -1383,7 +1383,7 @@ sub commandCallback {
 	$iOldPlayState{$client} = $iPlay;
 
 	$log->debug( " New power state is " . $iPower . " and old power state was " . $iPowerOld);
-	$log->debug( " New play state is " . $iPlay . " and old play state was " . $iPowerOldPlay );
+	$log->debug( " New play state is " . $iPlay . " and old play state was " . $iPlayOld );
 
 	# Compare new power state with last known power state run external component power script
 	if( $iPowerOld ne $iPower) {
@@ -1403,7 +1403,7 @@ sub commandCallback {
 	}
 
 	if( $iPlayOld eq 'play' && not( $iPlay eq 'play' ) ) {
-		$log->debug( $client->name() . " handle IR command for change to playing state.");
+		$log->debug( $client->name() . " handle IR command for change to paused state.");
 		handlePause( $client );
 	}
 
