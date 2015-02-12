@@ -1347,7 +1347,7 @@ sub IRBlastPulse {
 
 # Actual power and play state (needed for internal tracking)
 my %iOldPowerState;
-my %iOldPlayState;
+my %iOldPlayingState;
 
 # Used to temporarily block IR Repeater functionality (while IR Blasting)
 my %iBlockIRRepeater;
@@ -1373,17 +1373,17 @@ sub commandCallback {
 
 	# Set new power state and play state
 	my $iPower = $client->power();
-	my $iPlay = $client->getMode();
+	my $iPlaying = $client->iPlaying();
 
 	# Save the new old play and power states before resetting with current states
 	my $iPowerOld = $iOldPowerState{$client};
-	my $iPlayOld = $iOldPlayState{$client};
+	my $iPlayingOld = $iOldPlayingState{$client};
 
 	$iOldPowerState{$client} = $iPower;
-	$iOldPlayState{$client} = $iPlay;
+	$iOldPlayingState{$client} = $iPlaying;
 
 	$log->debug( " New power state is " . $iPower . " and old power state was " . $iPowerOld);
-	$log->debug( " New play state is " . $iPlay . " and old play state was " . $iPlayOld );
+	$log->debug( " New play state is " . $iPlaying . " and old play state was " . $iPlayingOld );
 
 	# Compare new power state with last known power state run external component power script
 	if( $iPowerOld ne $iPower) {
@@ -1397,12 +1397,12 @@ sub commandCallback {
 
 	# Compare new play state with last known play state and handle IR command accordingly
 
-	if( $iPlay eq 'play' && not( $iPlayOld eq 'play' ) ) {
+	if( $iPlay eq '1' && $iPlayOld eq '0' ) {
 		$log->debug( $client->name() . " handle IR command for change to playing state.");
 		handlePlay( $client );
 	}
 
-	if( $iPlayOld eq 'play' && not( $iPlay eq 'play' ) ) {
+	if( $iPlayOld eq '1' && $iPlay eq '0' ) {
 		$log->debug( $client->name() . " handle IR command for change to paused state.");
 		handlePause( $client );
 	}
