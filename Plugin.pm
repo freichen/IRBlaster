@@ -1382,6 +1382,9 @@ sub commandCallback {
 	$iOldPowerState{$client} = $iPower;
 	$iOldPlayState{$client} = $iPlay;
 
+	$log->debug( " New power state is " . $iPower . " and old power state was " . $iPowerOld);
+	$log->debug( " New play state is " . $iPlay . " and old play state was " . $iPowerOldPlay );
+
 	# Compare new power state with last known power state run external component power script
 	if( $iPowerOld ne $iPower) {
 
