@@ -1397,12 +1397,12 @@ sub commandCallback {
 
 	# Compare new play state with last known play state and handle IR command accordingly
 
-	if( $iPlaying eq '1' && $iPlayingOld eq '0' ) {
+	if( $iPlaying eq '1' && not($iPlayingOld eq '1' ) ) {
 		$log->debug( $client->name() . " handle IR command for change to playing state.");
 		handlePlay( $client );
 	}
 
-	if( $iPlayingOld eq '1' && $iPlaying eq '0' ) {
+	if( $iPlayingOld eq '1' && not($iPlaying eq '1' ) ) {
 		$log->debug( $client->name() . " handle IR command for change to paused state.");
 		handlePause( $client );
 	}
