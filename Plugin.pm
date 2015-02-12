@@ -1345,8 +1345,10 @@ sub IRBlastPulse {
 	return $ircode;
 }
 
-# Actual power state (needed for internal tracking)
+# Actual power and play state (needed for internal tracking)
 my %iOldPowerState;
+my %iOldPlayState;
+
 # Used to temporarily block IR Repeater functionality (while IR Blasting)
 my %iBlockIRRepeater;
 
@@ -1369,41 +1371,41 @@ sub commandCallback {
 		return;
 	}
 
-	# Set new power state
+	# Set new power state and play state
 	my $iPower = $client->power();
+	my $iPlay = $client->getMode();
+
+	# Save the new old play and power states before resetting with current states
 	my $iPowerOld = $iOldPowerState{$client};
+	my $iPlayOld = $iOldPlayState{$client};
+
 	$iOldPowerState{$client} = $iPower;
+	$iOldPlayState{$client} = $iPlay;
 
 	# Compare new power state with last known power state run external component power script
 	if( $iPowerOld ne $iPower) {
 
 		my @shell_output = `sudo /var/lib/squeezeboxserver/cache/InstalledPlugins/Plugins/IRBlaster/gpio_trigger.py ${name} ${iPowerOld} ${iPower} ${mainCommand} ${subCommand}`;
 		$log->debug( "Output from custom script: " . @shell_output[0]);
-		
-		# if power event was not triggered by a play or playlist newsong event then do not handle play action
-		if( not( $mainCommand eq 'play' ||
-		( $mainCommand eq 'playlist' && $subCommand eq 'newsong' ) ) ) {
 
-			$log->debug( "${name} changed power state directly from ${iPowerOld} to ${iPower}");
-			handlePowerOnOff($client, $iPower);
-		}
+		$log->debug( "${name} handle IR command for changed power state change from ${iPowerOld} to ${iPower}");
+		handlePowerOnOff($client, $iPower);
 	}
 
-	# Handle Play commands
-	if( $mainCommand eq 'play' ||
-		( $mainCommand eq 'playlist' && $subCommand eq 'newsong' ) ) {
+	# Compare new play state with last known play state and handle IR command accordingly
 
-		$log->debug( $client->name() . " handle IR for play command");
+	if( $iPlay eq 'play' && not( $iPlayOld eq 'play' ) ) {
+		$log->debug( $client->name() . " handle IR command for change to playing state.");
 		handlePlay( $client );
-	
-	# Handle Pause commands
-	} elsif( $mainCommand eq 'pause' ) {
+	}
 
-		$log->debug( $client->name() . " handle IR for pause command");
-		handlePause( $client) ;
+	if( $iPlayOld eq 'play' && not( $iPlay eq 'play' ) ) {
+		$log->debug( $client->name() . " handle IR command for change to playing state.");
+		handlePause( $client );
+	}
 
 	# Get newclient events
-	} elsif( $request->isCommand([['client'], ['new']])
+	if( $request->isCommand([['client'], ['new']])
 	      || $request->isCommand([['client'], ['reconnect']])) {
 		my $subCmd = $request->{'_request'}[1];
 	
