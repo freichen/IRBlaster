@@ -1375,7 +1375,7 @@ sub commandCallback {
 	my $iPower = $client->power();
 	my $iPlaying = $client->isPlaying();
 
-	# Save the new old play and power states before resetting with current states
+	# Save the new old play and power states before resetting status variables  with current state in case another command comes in
 	my $iPowerOld = $iOldPowerState{$client};
 	my $iPlayingOld = $iOldPlayingState{$client};
 
@@ -1385,26 +1385,22 @@ sub commandCallback {
 	$log->debug( " New power state is " . $iPower . " and old power state was " . $iPowerOld);
 	$log->debug( " New play state is " . $iPlaying . " and old play state was " . $iPlayingOld );
 
-	# Compare new power state with last known power state run external component power script
-	if( $iPowerOld ne $iPower) {
-
-		my @shell_output = `sudo /var/lib/squeezeboxserver/cache/InstalledPlugins/Plugins/IRBlaster/gpio_trigger.py ${name} ${iPowerOld} ${iPower} ${mainCommand} ${subCommand}`;
-		$log->debug( "Output from custom script: " . @shell_output[0]);
-
-		$log->debug( "${name} handle IR command for changed power state change from ${iPowerOld} to ${iPower}");
-		handlePowerOnOff($client, $iPower);
-	}
-
+	# trigger external command that can respond to any squeezebox commands
+	my @shell_output = `sudo /var/lib/squeezeboxserver/cache/InstalledPlugins/Plugins/IRBlaster/gpio_trigger.py ${name} ${iPowerOld} ${iPower} ${mainCommand} ${subCommand}`;
+	$log->debug( "Output from custom script: " . @shell_output[0]);
+		
 	# Compare new play state with last known play state and handle IR command accordingly
 
-	if( $iPlaying eq '1' && not($iPlayingOld eq '1' ) ) {
+	if( $iPlaying eq '1' && not($iPlayingOld eq '1' ) ) { 
 		$log->debug( $client->name() . " handle IR command for change to playing state.");
 		handlePlay( $client );
-	}
-
-	if( $iPlayingOld eq '1' && not($iPlaying eq '1' ) ) {
+	} elsif( $iPlayingOld eq '1' && not($iPlaying eq '1' ) ) {
 		$log->debug( $client->name() . " handle IR command for change to paused state.");
 		handlePause( $client );
+	} elsif( $iPowerOld ne $iPower) {
+		# only trigger power IR command if play state not also changed to avoid conflict
+		$log->debug( "${name} handle IR command for changed power state change from ${iPowerOld} to ${iPower}");
+		handlePowerOnOff($client, $iPower);
 	}
 
 	# Get newclient events
