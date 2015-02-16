@@ -44,6 +44,12 @@ if power_after == "1" and power_before == "0":
 	GPIO.output(18, GPIO.HIGH)
 	time.sleep(1)
 elif power_after == "0" and power_before == "1":
+	print "Set GPIO trigger to 0v to send amp in to standby."
+	GPIO.output(18, GPIO.LOW)
+	time.sleep(3)
+	print "Turn dac power socket OFF via 433MHz transmitter."
+	subprocess.Popen(["/home/pi/codesend", "2175198"])
+	time.sleep(0.5)
 	print "Turn the telly off by making upnp http post request."
 	data = '<?xml version="1.0" encoding="utf-8"?><s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body><u:X_SendKey xmlns:u="urn:panasonic-com:service:p00NetworkControl:1#X_SendKey"><X_KeyEvent>NRC_POWER-ONOFF</X_KeyEvent></u:X_SendKey></s:Body></s:Envelope>'
 	headers = { "SOAPACTION" : "\"urn:panasonic-com:service:p00NetworkControl:1#X_SendKey\"" }
@@ -52,11 +58,5 @@ elif power_after == "0" and power_before == "1":
 	try: urllib2.urlopen(req)
 	except URLError as e:
 		print e.reason
-	print "Set GPIO trigger to 0v to send amp in to standby."
-	GPIO.output(18, GPIO.LOW)
-	time.sleep(3)
-	print "Turn dac power socket OFF via 433MHz transmitter."
-	subprocess.Popen(["/home/pi/codesend", "2175198"])
-	time.sleep(0.5)
 else:
 	print "Power state unchanged or script error."
