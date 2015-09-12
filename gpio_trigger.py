@@ -1,8 +1,6 @@
 #!/usr/bin/python
 
 import RPi.GPIO as GPIO
-from pylms.server import Server
-from pylms.player import Player
 import sys
 import time
 import subprocess
