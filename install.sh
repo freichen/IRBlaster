@@ -15,6 +15,7 @@ sudo sed -i 's/options snd-usb-audio.*/options snd-usb-audio index=0/' /etc/modp
 
 # Remove packages not required to release space and speed up updates
 
+sudo apt-get remove -y wolfram-engine
 #sudo apt-get remove -y wolfram-engine lxappearance lxde lxde-common lxde-core lxde-icon-theme lxinput lxmenu-data lxpanel lxpolkit lxrandr lxsession lxsession-edit  lxshortcut lxtask  lxterminal  xinit xserver-xorg lightdm scratch midori desktop-base desktop-file-utils gnome-icon-theme gnome-themes-standard leafpad menu-xdg omxplayer xarchiver zenity tk8.5 pcmanfm blt idle idle3 python-tk python3-tk dillo openbox
 #sudo apt-get update && sudo apt-get upgrade
 #sudo apt-get -y autoremove
@@ -63,7 +64,7 @@ sudo unzip -n downloads/BBCiPlayer-v1.3.1alpha3.zip -d /var/lib/squeezeboxserver
 test ! -f downloads/Spotify-linux-v2.3.9.zip && wget https://kefa.s3.amazonaws.com/binaries/squeezebox/Spotify-linux-v2.3.9.zip -P downloads
 sudo unzip -n downloads/Spotify-linux-v2.3.9.zip -d /var/lib/squeezeboxserver/cache/InstalledPlugins/Plugins
 rm -rf downloads/IRBlaster
-git clone git@github.com:kefabean/IRBlaster.git downloads/IRBlaster
+git clone https://github.com/kefabean/IRBlaster.git downloads/IRBlaster
 sudo cp -Rn -t /var/lib/squeezeboxserver/cache/InstalledPlugins/Plugins/ downloads/IRBlaster
 sudo cp files/state.prefs /var/lib/squeezeboxserver/prefs/plugin
 sudo cp files/extensions.prefs /var/lib/squeezeboxserver/prefs/plugin
