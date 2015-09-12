@@ -44,7 +44,7 @@ SL_VERSION=$(sudo $DAEMON -t | grep "Squeezelite v" | tr -s ' ' | cut -d ',' -f1
 # Squeezebox server port for sending play and power off commands
 SB_SERVER_CLI_PORT="9090"
 # Soundcard or Raspberry Pi to use
-SL_SOUNDCARD="front:CARD=MDAC,DEV=0"
+SL_SOUNDCARD="plughw:0,0"
 # Use squeezebox server on localhost
 SB_SERVER_IP="127.0.0.1"
 
