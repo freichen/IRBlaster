@@ -27,7 +27,7 @@ pins of the Raspberry Pi.
    "Telling" methods return the object itself, for concatenation.
 =cut
 
-package WiringPi;
+package Plugins::IRBlaster::WiringPi;
 use strict;
 
 require Exporter;
