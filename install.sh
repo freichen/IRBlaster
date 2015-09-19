@@ -45,7 +45,7 @@ rm -rf downloads/433Utils
 git clone git@github.com:kefabean/433Utils.git downloads/433Utils
 make -C ./downloads/433Utils/RPi_utils
 rm -rf downloads/WiringPi-Perl
-git clone git@github.com:kefabean/WiringPi-Perl.git
+git clone git@github.com:kefabean/WiringPi-Perl.git downloads/WiringPi-Perl
 
 # Install squeezeserver (sourced from http://downloads.slimdevices.com/LogitechMediaServer_v7.8.0/logitechmediaserver_7.8.0_all.deb)
 
@@ -76,6 +76,10 @@ sudo service logitechmediaserver start
 # Install squeezelite (originally sourced from http://squeezelite-downloads.googlecode.com/git/squeezelite-armv6hf)
 
 test ! -f downloads/squeezelite-armv6hf && wget https://kefa.s3.amazonaws.com/binaries/squeezebox/squeezelite-armv6hf -P downloads
+ps cax | grep squeezelite 
+if [ $? -eq 0 ]; then
+  sudo service squeezelite stop
+fi
 sudo cp downloads/squeezelite-armv6hf /usr/bin
 sudo chmod a+x /usr/bin/squeezelite-armv6hf
 sudo cp files/squeezelite-initd /etc/init.d/squeezelite
