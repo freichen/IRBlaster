@@ -33,7 +33,7 @@ sudo service ssh restart
 
 # Install prerequisites
 
-sudo apt-get install -y libflac-dev libfaad2 libmad0
+sudo apt-get install -y libflac-dev libfaad2 libmad0 libinline-perl
 mkdir -p downloads
 rm -rf downloads/wiringPi
 git clone git@github.com:kefabean/wiringPi.git downloads/wiringPi
@@ -46,6 +46,7 @@ git clone git@github.com:kefabean/433Utils.git downloads/433Utils
 make -C ./downloads/433Utils/RPi_utils
 rm -rf downloads/WiringPi-Perl
 git clone git@github.com:kefabean/WiringPi-Perl.git downloads/WiringPi-Perl
+ln -s /home/pi/squeezeserver-rpi/downloads/wiringPi/wiringPi /home/pi/squeezeserver-rpi/downloads/WiringPi-Perl/WiringPi
 
 # Install squeezeserver (sourced from http://downloads.slimdevices.com/LogitechMediaServer_v7.8.0/logitechmediaserver_7.8.0_all.deb)
 
