@@ -11,6 +11,15 @@ Part of the reason I want to stick with Raspberry Pi is that I have all sorts of
 - provide IR repeater functionality (for YouView box and M-DAC) so that these can all be hidden away in the attic (this is based on standard blaster functionality provided by the Squeezebox combined with JOHN SMITHs excellent IRBlaster plugin for squeezeserver)
 - provide an additional web interface for iPhone to generate IR codes controlling various devices over wifi (including M-DAC, Squeezebox, and YouView box). This is currently achieved using a customised version of JOHN SMITHs plugin and the blaster functionality provided by Squeezebox Classic. My plan is to convert this to LIRC running on RPi.
 
+This project will make use of the following GPIO pins (note this is for the RPi revision 2 pinout):
+
+Description (BCM GPIO/wiringPi/Header)
+- IR LIRC Tx Output (3/22/15)
+- IR Rx Input (4/23/16)
+- 433 Mhz Tx Output (0/17/11)
+- 433 Mhz Rx Input (2/27/13)
+- Amplifier Trigger Output (1/18/12)
+
 Given the increased reliance on RPi the key thing is to document the setup and make sure that I am not dependent on any external repositories to install. Given the product is end of life - these may get moved around or disappear entirely! From my perspective, documenting the process means ensuring that the entire install can be scripted. That way in 10 years time when something breaks or needs to be modified I have everything required to get up and running again. Therefore I have hosted all source code in my own github repo and all binaries are publically hosted in Amazon S3.
 
 Key requirements are: 
@@ -20,6 +29,8 @@ Key requirements are:
 - wiringPi and Codesend (433Utils) to provide GPIO access and control of 433MHz transmitter devices (these are a couple of quid on Amazon)
 
 Right now the basic installation process is to clone this git repo on to your RPi, change in to the newly created directory and run the install.sh command. I'll try to provide further detail later...
+
+
 
 
 
