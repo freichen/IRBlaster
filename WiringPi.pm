@@ -67,7 +67,7 @@ sub setup {
     my $class = ref($proto) || $proto;          #  MAGIC - DO NOT TRY TO UNDERSTAND THIS
     my $self = undef;
     
-    my $success = wiringPiSetup;
+    my $success = wiringPiSetupSys;
     if ($success >= 0) {
         $self = {"success" => $success};
         bless $self, $class;                    #  MAGIC - DO NOT TRY TO UNDERSTAND THIS
