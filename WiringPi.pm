@@ -37,6 +37,8 @@ our @EXPORT_OK = qw/setup pin_mode ms_delay digital_read digital_write/;
 #  We use Inline::C to wrap  (some of)  Gordon's functions as though they were
 #  Perl functions .....
 
+use Inline Config => DIRECTORY => './.Inline';
+
 use Inline C => Config =>
     ENABLE => AUTOWRAP =>
     LIBS => "-lwiringPi ";
