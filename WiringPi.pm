@@ -42,7 +42,7 @@ use Inline C => Config =>
     LIBS => "-lwiringPi ";
 
 use Inline C => <<"--END-C--";
-    int  wiringPiSetup() ;
+    int  wiringPiSetupSys() ;
     void pinMode(int pin, int mode) ;
     int  digitalRead(int pin) ;
     void digitalWrite(int pin, int value) ;
