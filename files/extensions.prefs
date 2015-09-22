@@ -1,0 +1,14 @@
+---
+_ts_auto: 1392808217
+_ts_otherrepo: 1392810216
+_ts_plugin: 1424032582
+_ts_repos: 1424032483
+_version: 3
+auto: 0
+otherrepo: 1
+plugin:
+  BBCiPlayer: 1
+  IRBlaster: 1
+  Spotify: 1
+repos:
+- http://bpaplugins.googlecode.com/svn/trunk/repo-playhls.xml
