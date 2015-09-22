@@ -263,6 +263,18 @@ sub initPlugin {
 	#
 	Slim::Utils::Timers::setTimer( 47114711, (Time::HiRes::time() + 5.0), \&repeatCheckConnectedPlayers);
 
+	# export Raspberry Pi GPIO pins to allow access from userland programs
+        my @shell_output = `sudo gpio export 22 out`;
+        $log->debug( "Output from custom script: " . @shell_output[0]);
+        my @shell_output = `sudo gpio export 23 in`;
+        $log->debug( "Output from custom script: " . @shell_output[0]);
+        my @shell_output = `sudo gpio export 17 out`;
+        $log->debug( "Output from custom script: " . @shell_output[0]);
+        my @shell_output = `sudo gpio export 27 in`;
+        $log->debug( "Output from custom script: " . @shell_output[0]);
+        my @shell_output = `sudo gpio export 18 out`;
+        $log->debug( "Output from custom script: " . @shell_output[0]);
+
 # Not calling our parent class prevents us from getting added in the player UI
 #	$classPlugin->SUPER::initPlugin();
 }
