@@ -1,4 +1,4 @@
-# installation-scripts
+# squeezeserver-rpi
 
 As the squeezebox platform is effectively now end of life, until something better turns up I wanted to reduce my dependency on proprietary hardware and move everything to the more open Raspberry Pi platform. Currently I have a Raspberry Pi serving music that is connected to various Squeezebox devices (Classic and Radio). The Classic is wired in to my M-DAC which in turn feeds a power amplifier.
 
@@ -13,12 +13,12 @@ Part of the reason I want to stick with Raspberry Pi is that I have all sorts of
 
 This project will make use of the following GPIO pins (note this is for the RPi revision 2 pinout):
 
-Description (BCM GPIO/wiringPi/Header)
-- IR LIRC Tx Output (3/22/15)
-- IR Rx Input (4/23/16)
-- 433 Mhz Tx Output (0/17/11)
-- 433 Mhz Rx Input (2/27/13)
-- Amplifier Trigger Output (1/18/12)
+- Description       (BCM GPIO/wiringPi/Header)
+- IR LIRC Tx Output  (3/22/15)
+- IR LIRC Rx Input   (4/23/16)
+- 433 Mhz Tx Output  (0/17/11)
+- 433 Mhz Rx Input   (2/27/13)
+- Amp Trigger Output (1/18/12)
 
 Given the increased reliance on RPi the key thing is to document the setup and make sure that I am not dependent on any external repositories to install. Given the product is end of life - these may get moved around or disappear entirely! From my perspective, documenting the process means ensuring that the entire install can be scripted. That way in 10 years time when something breaks or needs to be modified I have everything required to get up and running again. Therefore I have hosted all source code in my own github repo and all binaries are publically hosted in Amazon S3.
 
