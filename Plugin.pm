@@ -183,7 +183,7 @@ my $gMaxFirmwareFifoSize = 50;	# Maximum number of ir codes the firmware fifo ca
 my $gOrigVolCmdFuncRef;			# Original function reference in SC
 my $gOrigIRCmdFuncRef;			# Original function reference in SC
 my $gOrigGetExternalVolumeInfoFuncRef;	# Original function reference in SC
-my $gpio = WiringPi->setup();
+my $gpio = Plugins::IRBlaster::WiringPi->setup();
 
 # ----------------------------------------------------------------------------
 
